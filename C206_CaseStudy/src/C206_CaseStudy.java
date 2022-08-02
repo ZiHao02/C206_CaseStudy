@@ -31,6 +31,23 @@ public class C206_CaseStudy {
 			menu();
 			option = Helper.readInt("Enter choice > ");
 			if (option == 1) {
+				adminPage();
+			} else if (option == 2) {
+				customerPage();
+			} else if (option == 3) {
+				designersPage();
+			}else if (option == 4) {
+				System.out.println("Thank You~");
+			}
+		}
+	}
+	
+	public void adminPage() {
+		int option = -1;
+		while (option != 4) {
+			menuAdmin();
+			option = Helper.readInt("Enter choice > ");
+			if (option == 1) {
 				viewAllusers();
 			} else if (option == 2) {
 				addUsers();
@@ -43,6 +60,16 @@ public class C206_CaseStudy {
 	}
 	
 	private void menu() {
+		Helper.line(80, "=");
+		System.out.println("Home Page");
+		Helper.line(80, "=");
+		System.out.println("1. Admin");
+		System.out.println("2. Designers");
+		System.out.println("3. Customer");
+		System.out.println("4. Quit");
+	}
+	
+	private void menuAdmin() {
 		Helper.line(80, "=");
 		System.out.println("Admin Interface");
 		Helper.line(80, "=");
@@ -92,4 +119,17 @@ public class C206_CaseStudy {
 			System.out.println("List is Currently Empty");
 		}
 	}
+	
+	
+	public void customerPage() {
+		//Add what customer can do
+	}
+	
+	public void designersPage() {
+		//Add what designers can do
+	}
+	
 }
+
+
+
