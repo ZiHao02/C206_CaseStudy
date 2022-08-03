@@ -90,14 +90,12 @@ public class C206_CaseStudy {
 		String email = Helper.readString("Enter Email: ");
 		String password = Helper.readString("Enter Passowrd: ");
 		
-
 		if (!name.isEmpty() && !role.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
 			userList.add(new admin_Class(name, role, email, password));
 			System.out.println("New User Added");
 		}else {
 			System.out.println("Please enter a valid input");
 		}
-		
 	}	
 		
 	public void viewAllusers() {
@@ -201,7 +199,6 @@ public class C206_CaseStudy {
 			System.out.println("Quotation failed to remove.");
 		}
 	}
-	
 }
 
 
