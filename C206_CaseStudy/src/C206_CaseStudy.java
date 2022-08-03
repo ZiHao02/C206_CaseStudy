@@ -13,7 +13,8 @@ public class C206_CaseStudy {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		C206_CaseStudy mw = new C206_CaseStudy();
+		
 		userList.add(new admin_Class("Bob", "User", "bob@mail.com", "SecurePa$sW0rd"));	
 		userList.add(new admin_Class("Alice", "User", "bob@mail.com", "SecurePa$sW0rd"));	
 		userList.add(new admin_Class("Charile", "User", "bob@mail.com", "SecurePa$sW0rd"));	
@@ -24,8 +25,6 @@ public class C206_CaseStudy {
 		quotationList.add(new Quotations("RV002", "QT003", "Living Room", "Door", 200.00, "Ben", LocalDate.of(2022, 12, 14), 220.00));
 		quotationList.add(new Quotations("RV003", "QT004", "Toilet", "Flooring", 550.00, "Carrol", LocalDate.of(2023, 05, 9), 600.00));
 		
-		C206_CaseStudy mw = new C206_CaseStudy();
-
 		mw.start();
 	}
 	
