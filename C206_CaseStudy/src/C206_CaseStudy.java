@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class C206_CaseStudy {
 
 	private static ArrayList<admin_Class> userList = new ArrayList<admin_Class>();
+	private static ArrayList <QuotationRequests> requestQuotationList = new ArrayList<QuotationRequests>();
 	private static ArrayList <Quotations> quotationList = new ArrayList<Quotations>();
 	private static final int OPTION_VIEW = 1;
 	private static final int OPTION_ADD = 2;
@@ -19,6 +20,12 @@ public class C206_CaseStudy {
 		userList.add(new admin_Class("Alice", "User", "bob@mail.com", "SecurePa$sW0rd"));	
 		userList.add(new admin_Class("Charile", "User", "bob@mail.com", "SecurePa$sW0rd"));	
 		userList.add(new admin_Class("Emily", "User", "bob@mail.com", "SecurePa$sW0rd"));	
+		
+		requestQuotationList.add(new QuotationRequests("HDB", 85, "John", 97324510, "john@mail.com", 640.00, "2022/7/21", 700.00, "Toilet", 6, 4, "No", "Yes"));
+		requestQuotationList.add(new QuotationRequests("HDB", 70, "David", 67014597, "david@mail.com", 251.00, "2022/7/21", 550.00, "Whole House", 5, 3, "No", "No"));
+		requestQuotationList.add(new QuotationRequests("Landed", 420, "Adam", 91336502, "adam@mail.com", 946.00, "2022/7/21", 220.00, "Room", 8, 3, "Modern", "No"));
+		requestQuotationList.add(new QuotationRequests("Private", 98, "Ben", 67882174, "ben@mail.com", 508.00, "2022/7/21", 600.00, "Kitchen", 4, 2, "No", "Yes"));
+		
 		
 		quotationList.add(new Quotations("RV001", "QT001", "Kitchen", "Flooring", 550.00, "Anne", LocalDate.of(2022, 10, 8), 700.00));
 		quotationList.add(new Quotations("RV001", "QT002", "Bedroom", "Closet", 350.00, "Anne", LocalDate.of(2022, 10, 12), 550.00));
@@ -126,7 +133,80 @@ public class C206_CaseStudy {
 	
 	public void customerPage() {
 		//Add what customer can do
+		int option = -1;
+		while (option != 4) {
+			menuCustomer();
+			option = Helper.readInt("Enter choice > ");
+			if (option == OPTION_VIEW) {
+				addQuotationRequest();
+			} else if (option == OPTION_ADD) {
+				viewAllRequests();
+			} else if (option == OPTION_DELETE) {
+				deleteQuotationRequest();
+			}else if (option == OPTION_QUIT) {
+				System.out.println("Thank You :D");
+			}
+		}
 	}
+		
+	private void menuCustomer() {
+		C206_CaseStudy.setHeader("Customer Interface");
+		System.out.println("1. Add Quotation Requests");
+		System.out.println("2. View All Quotation Requests");
+		System.out.println("3. Deleting Quotation Requests by Requestor Name");
+		System.out.println("4. Quit");
+		
+		}
+	
+	
+	public void addQuotationRequest() {
+		String propertyType = Helper.readString("Enter your property type: ");
+	    double areaSize = Helper.readDouble("Enter your area size: ");
+	    String requestorName = Helper.readString("Enter your Requestor Name: ");
+	    int contactNumber = Helper.readInt("Enter your contact number: ");
+		String email = Helper.readString("Enter your email: ");
+		double budget = Helper.readDouble("Enter your budget: ");
+		String completionDate = Helper.readString("Enter your Target Completion Date: ");
+		String renovationType = Helper.readString("Enter your Renovation Type: ");
+		int numberOfRooms = Helper.readInt("Enter your number of rooms: ");
+		int numberOfToilets = Helper.readInt("Enter your number of toilets: ");
+		String renovationStyle = Helper.readString("Enter your Renovation Style: ");
+		String urgentRequest = Helper.readString("Is it an urgent request?: ");
+		
+		if(!propertyType.isEmpty() && areaSize >= 0 & !requestorName.isEmpty() && contactNumber >= 0 && !email.isEmpty() && budget > 0 && !completionDate.isEmpty()  && !renovationType.isEmpty() && numberOfRooms >= 0 && numberOfToilets >= 0 && !renovationStyle.isEmpty() && !urgentRequest.isEmpty()) {
+			requestQuotationList.add(new QuotationRequests(propertyType, areaSize, requestorName, contactNumber, email, budget, completionDate, renovationType, numberOfRooms, numberOfToilets, renovationStyle, urgentRequest));
+			System.out.println("Quotation Request added successfully.");
+		}
+		else {
+			System.out.println("Quotation Request failed.");
+		}
+		
+	}
+	
+	public void viewAllRequests() {
+		String output = String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "Property Type", "Area Size", "Requestor Name", "Contact Number", "Email", "Budget", "Completion Date", "Renovation Type", "Number of Rooms", "Number of Toilets", "Renovation Style (optional)", "Urgent Request?");
+		for (QuotationRequests qr : requestQuotationList) {
+			output += String.format("%-84s\n", qr.toString());
+		}
+		System.out.println(output);
+	}
+		
+	public void deleteQuotationRequest() {
+			boolean deleted = false;
+			String requestorName = Helper.readString("\nEnter Requestor Name > ");
+			for (int qr = 0; qr < quotationList.size(); qr++) {
+				if (requestQuotationList.get(qr).getRequestorName().equals(requestorName)) {
+					requestQuotationList.remove(qr);
+					deleted = true;
+				}
+			}
+			if(deleted == true) {
+				System.out.println("Request removed successfully.");
+			}
+			else {
+				System.out.println("Could not remove Request.");
+			}
+		}
 	
 	public void designersPage() {
 		//Add what designers can do
