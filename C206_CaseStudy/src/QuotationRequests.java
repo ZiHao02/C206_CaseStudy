@@ -1,4 +1,3 @@
-
 public class QuotationRequests {
 	private String propertyType;
 	private double areaSize;

@@ -26,7 +26,6 @@ public class C206_CaseStudy {
 		requestQuotationList.add(new QuotationRequests("Landed", 420, "Adam", 91336502, "adam@mail.com", 946.00, "2022/7/21", 220.00, "Room", 8, 3, "Modern", "No"));
 		requestQuotationList.add(new QuotationRequests("Private", 98, "Ben", 67882174, "ben@mail.com", 508.00, "2022/7/21", 600.00, "Kitchen", 4, 2, "No", "Yes"));
 		
-		
 		quotationList.add(new Quotations("RV001", "QT001", "Kitchen", "Flooring", 550.00, "Anne", LocalDate.of(2022, 10, 8), 700.00));
 		quotationList.add(new Quotations("RV001", "QT002", "Bedroom", "Closet", 350.00, "Anne", LocalDate.of(2022, 10, 12), 550.00));
 		quotationList.add(new Quotations("RV002", "QT003", "Living Room", "Door", 200.00, "Ben", LocalDate.of(2022, 12, 14), 220.00));
