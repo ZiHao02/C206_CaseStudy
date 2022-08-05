@@ -263,8 +263,7 @@ public class C206_CaseStudy {
 		}
 		if(found == true) {
 			output += String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "REQUEST_ID", "QUOTATION_ID", "RENOVATION CATEGORY", "RENOVATION ITEM", "RENOVATION ITEM PRICE", 
-					"DESIGNER", 
-					"START DATE", "TOTAL QUOTATION SUM");
+					"DESIGNER", "START DATE", "TOTAL QUOTATION SUM");
 			output += output1;
 		}
 		else {
