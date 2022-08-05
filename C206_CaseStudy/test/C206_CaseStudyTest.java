@@ -66,6 +66,10 @@ public class C206_CaseStudyTest {
 		//test to ensure the list is not null but empty
 		assertNotNull("Test if there is valid Quotation arraylist to retrieve item", quotationList);
 		C206_CaseStudy.addQuotation(quotationList, qt1);
+		C206_CaseStudy.deleteQuotation(quotationList, "QT015");
+		assertEquals("Test that Quotation arraylist size is 0", 0, quotationList.size());
+		
+		C206_CaseStudy.addQuotation(quotationList, qt1);
 		C206_CaseStudy.addQuotation(quotationList, qt2);
 		C206_CaseStudy.deleteQuotation(quotationList, "QT016");
 		assertEquals("Test that Quotation arraylist size is 1", 1, quotationList.size());
