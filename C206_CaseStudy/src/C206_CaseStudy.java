@@ -238,7 +238,7 @@ public class C206_CaseStudy {
 		C206_CaseStudy.setHeader("Designer Interface");
 		System.out.println("1. View All Quotations");
 		System.out.println("2. Add New Quotations");
-		System.out.println("3. Delete Quotations by Quotation_ID");
+		System.out.println("3. Delete Quotations by Quotation ID");
 		System.out.println("4. Quit");
 	}
 	
