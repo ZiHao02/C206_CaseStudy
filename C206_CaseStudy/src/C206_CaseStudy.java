@@ -10,7 +10,8 @@ public class C206_CaseStudy {
 	private static final int OPTION_ADD = 2;
 	private static final int OPTION_DELETE = 3;
 	private static final int OPTION_QUIT = 4;
-//	private static final int OPTION_QUIT = 5;
+	private static String qID = "";
+	private static String rID = "";
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -213,12 +214,18 @@ public class C206_CaseStudy {
 		while (option != 4) {
 			menuDesigner();
 			option = Helper.readInt("Enter choice > ");
+			
 			if (option == OPTION_VIEW) {
-				viewAllQuotation();
+				C206_CaseStudy.viewAllQuotation(quotationList);
+				
 			} else if (option == OPTION_ADD) {
-				addQuotation();
+				Quotations qt = inputQuotation();
+				C206_CaseStudy.addQuotation(quotationList, qt);
+				
 			} else if (option == OPTION_DELETE) {
-				deleteQuotation();
+				String Qid = Helper.readString("\nEnter quotation id > ");
+				C206_CaseStudy.deleteQuotation(quotationList, Qid);
+				
 			}else if (option == OPTION_QUIT) {
 				System.out.println("Thank You~");
 			}
@@ -233,17 +240,37 @@ public class C206_CaseStudy {
 		System.out.println("4. Quit");
 	}
 	
-	public void viewAllQuotation() {
-		String output = String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "REQUEST_ID", "QUOTATION_ID", "RENOVATION CATEGORY", "RENOVATION ITEM", "RENOVATION ITEM PRICE", "DESIGNER", "START DATE", "TOTAL QUOTATION SUM");
+	public static String retrieveAllQuotation(ArrayList<Quotations> quotationList) {
+		boolean found = false;
+		String output = "";
+		String output1 = "";
+		String rID = Helper.readString("Enter request id > ");
 		for (Quotations q : quotationList) {
-			output += String.format("%-84s\n", q.toString());
+			if(q.getRID().equalsIgnoreCase(rID)) {
+				output1 += String.format("%-84s\n", q.toString());
+				found = true;
+			}
 		}
+		if(found == true) {
+			output += String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "REQUEST_ID", "QUOTATION_ID", "RENOVATION CATEGORY", "RENOVATION ITEM", "RENOVATION ITEM PRICE", "DESIGNER", "START DATE", "TOTAL QUOTATION SUM");
+			output += output1;
+		}
+		else {
+			output = "Request_ID not found.";
+		}
+		return output;
+	}
+	
+	public static void viewAllQuotation(ArrayList<Quotations> quotationList) {
+		String output = "";
+		output += retrieveAllQuotation(quotationList);
 		System.out.println(output);
 	}
 	
-	public void addQuotation() {
-		String rID = Helper.readString("\nEnter request id > ");
-		String qID = Helper.readString("Enter quotation id > ");
+	public Quotations inputQuotation() {
+		Quotations qt = new Quotations("", "", "", "", 0, "", LocalDate.now(), 0);
+		rID += Helper.readString("\nEnter request id > ");
+		qID += Helper.readString("Enter quotation id > ");
 		String rc = Helper.readString("Enter renovation catergory > ");
 		String rcItem = Helper.readString("Enter renovation item > ");
 		double itemPrice = Helper.readDouble("Enter price of renovation item > ");
@@ -252,9 +279,25 @@ public class C206_CaseStudy {
 		int sMDate = Helper.readInt("Enter month of start date > ");
 		int sYDate = Helper.readInt("Enter year of start date > ");
 		double tSum = Helper.readDouble("Enter total quotation amount > ");
-		
+
 		if(!rID.isEmpty() && !qID.isEmpty() & !rc.isEmpty() && !rcItem.isEmpty() && itemPrice > 0 && !dName.isEmpty() && sDDate > 0 && sMDate > 0 && sYDate > 0 && tSum > 0) {
-			quotationList.add(new Quotations(rID, qID, rc, rcItem, itemPrice, dName, LocalDate.of(sYDate, sMDate, sDDate), tSum));
+			qt = new Quotations(rID, qID, rc, rcItem, itemPrice, dName, LocalDate.of(sYDate, sMDate, sDDate), tSum);
+		}
+		return qt;
+	}
+	
+	public static void addQuotation(ArrayList<Quotations> quotationList, Quotations qt) {
+		boolean canAdd = false;
+		for(int q = 0; q < quotationList.size(); q++) {
+			if(!quotationList.get(q).getQID().equalsIgnoreCase(qID)) {
+				canAdd = true;
+			}
+			else {
+				canAdd = false;
+			}
+		}
+		if(canAdd == true) {
+			quotationList.add(qt);
 			System.out.println("Quotation added successfully.");
 		}
 		else {
@@ -262,20 +305,19 @@ public class C206_CaseStudy {
 		}
 	}
 	
-	public void deleteQuotation() {
-		boolean removed = false;
-		String qID = Helper.readString("\nEnter quotation id > ");
+	public static void deleteQuotation(ArrayList<Quotations> quotationsList, String Qid) {
+		boolean isDeleted = false;
 		for (int q = 0; q < quotationList.size(); q++) {
-			if (quotationList.get(q).getQID().equals(qID)) {
-				quotationList.remove(q);
-				removed = true;
+			if (quotationList.get(q).getQID().equalsIgnoreCase(Qid)) {
+				quotationsList.remove(q);
+				isDeleted = true;
 			}
 		}
-		if(removed == true) {
-			System.out.println("Quotation removed successfully.");
+		if(isDeleted == true) {
+			System.out.println("Quotation deleted successfully.");
 		}
 		else {
-			System.out.println("Quotation failed to remove.");
+			System.out.println("Quotation failed to delete.");
 		}
 	}
 }
