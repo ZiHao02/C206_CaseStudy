@@ -55,7 +55,8 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that Quotation arraylist size is 3", 3, quotationList.size());
 		//test if the expected output string is the same as the list of quotations retrieved from C206_CaseStudy
 		allQuotations = C206_CaseStudy.retrieveAllQuotation(quotationList, "RV004");
-		testOutput =  String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "REQUEST_ID", "QUOTATION_ID", "RENOVATION CATEGORY", "RENOVATION ITEM", "RENOVATION ITEM PRICE", "DESIGNER", "START DATE", "TOTAL QUOTATION SUM");
+		testOutput =  String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "REQUEST_ID", "QUOTATION_ID", "RENOVATION CATEGORY", "RENOVATION ITEM", "RENOVATION ITEM PRICE", "DESIGNER", 
+				"START DATE", "TOTAL QUOTATION SUM");
 		testOutput += String.format("%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "RV004", "QT016", "Living Room", "Door", "$200.0", "Anne", "28 Dec 2022", "$280.5");
 		testOutput += String.format("%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "RV004", "QT017", "Living Room", "Window", "$150.0", "Anne", "28 Dec 2022", "$250.0");
 	
