@@ -12,6 +12,7 @@ public class C206_CaseStudy {
 	private static final int OPTION_QUIT = 4;
 	private static String qID = "";
 	private static String rID = "";
+	private static String rId = "";
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -216,6 +217,7 @@ public class C206_CaseStudy {
 			option = Helper.readInt("Enter choice > ");
 			
 			if (option == OPTION_VIEW) {
+				rId = Helper.readString("Enter request id > ");
 				C206_CaseStudy.viewAllQuotation(quotationList);
 				
 			} else if (option == OPTION_ADD) {
@@ -240,15 +242,20 @@ public class C206_CaseStudy {
 		System.out.println("4. Quit");
 	}
 	
-	public static String retrieveAllQuotation(ArrayList<Quotations> quotationList) {
+	public static String retrieveAllQuotation(ArrayList<Quotations> quotationList, String rId) {
 		boolean found = false;
 		String output = "";
 		String output1 = "";
-		String rID = Helper.readString("Enter request id > ");
-		for (Quotations q : quotationList) {
-			if(q.getRID().equalsIgnoreCase(rID)) {
-				output1 += String.format("%-84s\n", q.toString());
-				found = true;
+		
+		if(quotationList.size() == 0) {
+			found = false;
+		}
+		else {
+			for(Quotations q : quotationList) {
+				if (q.getRID().equalsIgnoreCase(rId)) {
+					output1 += String.format("%-84s\n", q.toString());
+					found = true;
+				}
 			}
 		}
 		if(found == true) {
@@ -258,12 +265,13 @@ public class C206_CaseStudy {
 		else {
 			output = "Request_ID not found.";
 		}
+		
 		return output;
 	}
 	
 	public static void viewAllQuotation(ArrayList<Quotations> quotationList) {
 		String output = "";
-		output += retrieveAllQuotation(quotationList);
+		output += retrieveAllQuotation(quotationList, rId);
 		System.out.println(output);
 	}
 	
@@ -288,14 +296,20 @@ public class C206_CaseStudy {
 	
 	public static void addQuotation(ArrayList<Quotations> quotationList, Quotations qt) {
 		boolean canAdd = false;
-		for(int q = 0; q < quotationList.size(); q++) {
-			if(!quotationList.get(q).getQID().equalsIgnoreCase(qID)) {
-				canAdd = true;
-			}
-			else {
-				canAdd = false;
+		if(quotationList.size() == 0) {
+			canAdd = true;
+		}
+		else {
+			for (int q = 0; q < quotationList.size(); q++) {
+				if (!quotationList.get(q).getQID().equalsIgnoreCase(qID)) {
+					canAdd = true;
+				}
+				else {
+					canAdd = false;
+				}
 			}
 		}
+	
 		if(canAdd == true) {
 			quotationList.add(qt);
 			System.out.println("Quotation added successfully.");
@@ -305,12 +319,17 @@ public class C206_CaseStudy {
 		}
 	}
 	
-	public static void deleteQuotation(ArrayList<Quotations> quotationsList, String Qid) {
+	public static void deleteQuotation(ArrayList<Quotations> quotationList, String Qid) {
 		boolean isDeleted = false;
-		for (int q = 0; q < quotationList.size(); q++) {
-			if (quotationList.get(q).getQID().equalsIgnoreCase(Qid)) {
-				quotationsList.remove(q);
-				isDeleted = true;
+		if(quotationList.size() == 0) {
+			isDeleted = true;
+		}
+		else {
+			for (int q = 0; q < quotationList.size(); q++) {
+				if (quotationList.get(q).getQID().equalsIgnoreCase(Qid)) {
+					quotationList.remove(q);
+					isDeleted = true;
+				}
 			}
 		}
 		if(isDeleted == true) {
