@@ -112,7 +112,7 @@ public class C206_CaseStudy {
 		System.out.println("4. Quit");
 	}
 	
-	private void menuAdmin() {
+	private static void menuAdmin() {
         C206_CaseStudy.setHeader("Admin Interface");
         System.out.println("1. View All Users");
         System.out.println("2. Adding New Users");
@@ -221,7 +221,7 @@ public class C206_CaseStudy {
 		}
 	}
 		
-	private void menuCustomer() {
+	private static void menuCustomer() {
 		C206_CaseStudy.setHeader("Customer Interface");
 		System.out.println("1. Add Quotation Requests");
 		System.out.println("2. View All Quotation Requests");
@@ -311,7 +311,7 @@ public class C206_CaseStudy {
 	}
 	
 	//phoebe
-	private void menuDesigner() {
+	private static void menuDesigner() {
 		C206_CaseStudy.setHeader("Designer Interface");
 		System.out.println("1. View All Quotations");
 		System.out.println("2. Add New Quotations");
