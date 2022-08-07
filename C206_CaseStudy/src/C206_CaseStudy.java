@@ -307,7 +307,6 @@ public class C206_CaseStudy {
 	//phoebe
 	public static void addQuotation(ArrayList<Quotations> quotationList, Quotations qt) {
 		boolean canAdd = false;
-//		String test = "QT001";
 		if(quotationList.size() == 0) {
 			canAdd = true;
 		}
