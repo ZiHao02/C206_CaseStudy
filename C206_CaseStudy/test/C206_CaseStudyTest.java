@@ -38,7 +38,6 @@ public class C206_CaseStudyTest {
 	//phoebe
 	public void testAddQuotations() {
 		//check list is not null so that adding of item is possible
-		
 		assertNotNull("Check if there is valid Quotation arraylist to add to", quotationList);
 		
 		//normal
@@ -74,7 +73,6 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.addQuotation(quotationList, qt6);
 		assertEquals("Check that Quotation arraylist size is 4 after adding", 4, quotationList.size());		
 		assertSame("Check that Quotation is added", qt6, quotationList.get(3));
-		
 	}
 	@Test
 	//phoebe
