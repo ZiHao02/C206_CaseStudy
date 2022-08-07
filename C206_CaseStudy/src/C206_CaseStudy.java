@@ -10,8 +10,8 @@ public class C206_CaseStudy {
 	private static final int OPTION_ADD = 2;
 	private static final int OPTION_DELETE = 3;
 	private static final int OPTION_QUIT = 4;
-	private static String qID = "";
-	private static String rID = "";
+//	private static String qID = "";
+//	private static String rID = "";
 	private static String rId = "";
 	
 	public static void main(String[] args) {
@@ -131,7 +131,6 @@ public class C206_CaseStudy {
 		}
 	}
 	
-	
 	public void customerPage() {
 		//Add what customer can do
 		int option = -1;
@@ -158,7 +157,6 @@ public class C206_CaseStudy {
 		System.out.println("4. Quit");
 		
 		}
-	
 	
 	public void addQuotationRequest() {
 		String propertyType = Helper.readString("Enter your property type: ");
@@ -212,6 +210,7 @@ public class C206_CaseStudy {
 			}
 		}
 	
+	//phoebe
 	public void designersPage() {
 		//Add what designers can do
 		int option = -1;
@@ -237,6 +236,7 @@ public class C206_CaseStudy {
 		}
 	}
 	
+	//phoebe
 	private void menuDesigner() {
 		C206_CaseStudy.setHeader("Designer Interface");
 		System.out.println("1. View All Quotations");
@@ -245,6 +245,7 @@ public class C206_CaseStudy {
 		System.out.println("4. Quit");
 	}
 	
+	//phoebe
 	public static String retrieveAllQuotation(ArrayList<Quotations> quotationList, String rId) {
 		boolean found = false;
 		String output = "";
@@ -273,16 +274,18 @@ public class C206_CaseStudy {
 		return output;
 	}
 	
+	//phoebe
 	public static void viewAllQuotation(ArrayList<Quotations> quotationList) {
 		String output = "";
 		output += retrieveAllQuotation(quotationList, rId);
 		System.out.println(output);
 	}
 	
+	//phoebe
 	public Quotations inputQuotation() {
 		Quotations qt = new Quotations("", "", "", "", 0, "", LocalDate.now(), 0);
-		rID += Helper.readString("\nEnter request id > ");
-		qID += Helper.readString("Enter quotation id > ");
+		String rID = Helper.readString("\nEnter request id > ");
+		String qID = Helper.readString("Enter quotation id > ");
 		String rc = Helper.readString("Enter renovation catergory > ");
 		String rcItem = Helper.readString("Enter renovation item > ");
 		double itemPrice = Helper.readDouble("Enter price of renovation item > ");
@@ -293,36 +296,40 @@ public class C206_CaseStudy {
 		double tSum = Helper.readDouble("Enter total quotation amount > ");
 
 		if(!rID.isEmpty() && !qID.isEmpty() & !rc.isEmpty() && !rcItem.isEmpty() && itemPrice > 0 && !dName.isEmpty() && sDDate > 0 && sMDate > 0 && sYDate > 0 && tSum > 0) {
-			qt = new Quotations(rID, qID, rc, rcItem, itemPrice, dName, LocalDate.of(sYDate, sMDate, sDDate), tSum);
+			qt = new Quotations(rID.toUpperCase(), qID.toUpperCase(), rc, rcItem, itemPrice, dName, LocalDate.of(sYDate, sMDate, sDDate), tSum);
 		}
 		return qt;
 	}
 	
+	//phoebe
 	public static void addQuotation(ArrayList<Quotations> quotationList, Quotations qt) {
 		boolean canAdd = false;
+//		String test = "QT001";
 		if(quotationList.size() == 0) {
 			canAdd = true;
 		}
-		else {
+		else if (quotationList.size() > 0){
 			for (int q = 0; q < quotationList.size(); q++) {
-				if (!quotationList.get(q).getQID().equalsIgnoreCase(qID)) {
+				if (!quotationList.get(q).getQID().equalsIgnoreCase(qt.getQID())) {
 					canAdd = true;
 				}
 				else {
 					canAdd = false;
+					break;
 				}
 			}
-		}
-	
+		}	
+		System.out.println(canAdd);
 		if(canAdd == true) {
 			quotationList.add(qt);
 			System.out.println("Quotation added successfully.");
 		}
 		else {
-			System.out.println("Quotation failed to add.");
+			System.out.println("Quotation failed to add due to duplication.");
 		}
 	}
 	
+	//phoebe
 	public static void deleteQuotation(ArrayList<Quotations> quotationList, String Qid) {
 		boolean isDeleted = false;
 		if(quotationList.size() == 0) {
