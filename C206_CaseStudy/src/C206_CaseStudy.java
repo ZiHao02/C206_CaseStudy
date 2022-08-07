@@ -27,10 +27,10 @@ public class C206_CaseStudy {
 		userList.add(new admin_Class("Charile", "User", "bob@mail.com", "SecurePa$sW0rd"));	
 		userList.add(new admin_Class("Emily", "User", "bob@mail.com", "SecurePa$sW0rd"));	
 		
-		requestQuotationList.add(new QuotationRequests("HDB", 85, "John", 97324510, "john@mail.com", 640.00, "2022/7/21", 700.00, "Toilet", 6, 4, "No", "Yes"));
-		requestQuotationList.add(new QuotationRequests("HDB", 70, "David", 67014597, "david@mail.com", 251.00, "2022/7/21", 550.00, "Whole House", 5, 3, "No", "No"));
-		requestQuotationList.add(new QuotationRequests("Landed", 420, "Adam", 91336502, "adam@mail.com", 946.00, "2022/7/21", 220.00, "Room", 8, 3, "Modern", "No"));
-		requestQuotationList.add(new QuotationRequests("Private", 98, "Ben", 67882174, "ben@mail.com", 508.00, "2022/7/21", 600.00, "Kitchen", 4, 2, "No", "Yes"));
+		requestQuotationList.add(new QuotationRequests("HDB", 85, "John", 97324510, "john@mail.com", 640.00, "2022/7/21", "Toilet", 6, 4, "No", "Yes"));
+		requestQuotationList.add(new QuotationRequests("HDB", 70, "David", 67014597, "david@mail.com", 251.00, "2022/7/21", "Whole House", 5, 3, "No", "No"));
+		requestQuotationList.add(new QuotationRequests("Landed", 420, "Adam", 91336502, "adam@mail.com", 946.00, "2022/7/21", "Room", 8, 3, "Modern", "No"));
+		requestQuotationList.add(new QuotationRequests("Private", 98, "Ben", 67882174, "ben@mail.com", 508.00, "2022/7/21", "Kitchen", 4, 2, "No", "Yes"));
 		
 		quotationList.add(new Quotations("RV001", "QT001", "Kitchen", "Flooring", 550.00, "Anne", LocalDate.of(2022, 10, 8), 700.00));
 		quotationList.add(new Quotations("RV001", "QT002", "Bedroom", "Closet", 350.00, "Anne", LocalDate.of(2022, 10, 12), 550.00));
@@ -117,10 +117,10 @@ public class C206_CaseStudy {
         System.out.println("1. View All Users");
         System.out.println("2. Adding New Users");
         System.out.println("3. Deleting Users by Name");
-        System.out.println("\n4. View All Packages");
+        System.out.println("4. View All Packages");
         System.out.println("5. Add Package");
         System.out.println("6. Add Package by Code");
-        System.out.println("\n7. Quit");
+        System.out.println("7. Quit");
     }
 	
 	// Zi Hao

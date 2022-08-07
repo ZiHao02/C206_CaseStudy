@@ -43,17 +43,6 @@ public class QuotationRequests {
 		this.renovationStyle = renovationStyle;
 		this.urgentRequest = urgentRequest;
 	}
-	
-		
-	
-		
-	
-		
-	public QuotationRequests(String string, int i, String string2, int j, String string3, double d, String string4,
-			double e, String string5, int k, int l, String string6, String string7) {
-		
-	}
-
 
 	public String getPropertyType() {
 		return propertyType;
