@@ -1,5 +1,8 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import com.sun.tools.javac.util.JCDiagnostic.Fragment;
 
 public class C206_CaseStudy {
 
@@ -65,11 +68,13 @@ public class C206_CaseStudy {
 			menuAdmin();
 			option = Helper.readInt("Enter choice > ");
 			if (option == OPTION_VIEW) {
-				viewAllusers();
+				System.out.println(C206_CaseStudy.viewAllusers(userList));
 			} else if (option == OPTION_ADD) {
-				addUsers();
+				admin_Class user = inputUser();
+				C206_CaseStudy.addUsers(userList, user);
 			} else if (option == OPTION_DELETE) {
-				deleteUserbyName();
+				String username = Helper.readString("\nEnter User's name > ");
+				C206_CaseStudy.deleteUserbyName(userList, username);
 			}else if (option == OPTION_QUIT) {
 				System.out.println("Thank You~");
 			}
@@ -91,45 +96,86 @@ public class C206_CaseStudy {
 		System.out.println("3. Deleting Users by Name");
 		System.out.println("4. Quit");
 	}
-		
-	public void addUsers() {
+	
+	// Zi Hao
+	public admin_Class inputUser() {
+		admin_Class user = new admin_Class("", "", "", "");
 		String name = Helper.readString("Enter New User's Name: ");
 		String role = Helper.readString("Enter Role: ");
 		String email = Helper.readString("Enter Email: ");
 		String password = Helper.readString("Enter Passowrd: ");
-		
 		if (!name.isEmpty() && !role.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-			userList.add(new admin_Class(name, role, email, password));
-			System.out.println("New User Added");
-		}else {
-			System.out.println("Please enter a valid input");
+			user = new admin_Class(name, role, email, password);
 		}
-	}	
-		
-	public void viewAllusers() {
-		String output = String.format("%-10s %-10s %-20s %-20s %-10s\n", "Name", "role", "email", "password", "status");
-		for (admin_Class x : userList) {
-			output += String.format("%-10s %-10s %-20s %-20s %-10s\n", x.getName(), x.getRole(), x.getEmail(), x.getPassword(), x.getStatus());
-			}
-		System.out.println(output);
+		return user;
 	}
 	
-	public void deleteUserbyName() {
-		String userInput = Helper.readString("Enter User's Name: ");
-		int x =0;
-		while (x < userList.size()) {
-			if (userList.get(x).getName().equalsIgnoreCase(userInput)) {
-				userList.remove(x);
-				System.out.println("User Removed");
+	// Zi Hao
+	public static void addUsers(ArrayList<admin_Class> userlist, admin_Class user) {
+		boolean canAdd = false;
+		if (userlist.size() == 0) {
+			canAdd = true;
+		}else if (userlist.size() > 0) {
+			for (int i = 0; i < userlist.size(); i++) {
+				if (!userlist.get(i).getName().equals(user.getName())) {
+					canAdd = true;
+				}else {
+					canAdd = false;
+					break;
+				}
 			}
-			x++;
 		}
-		if (x == userList.size() && x != 0) {
-			System.out.println("User Not Found");
-		}else if (x == 0) {
-			System.out.println("List is Currently Empty");
+		if (canAdd) {
+			userlist.add(user);
+			System.out.println("User added successfully");
+		}else {
+			System.out.println("User failed to add due to duplicaiton.");
 		}
+		
+	}	
+	
+	// Zi Hao
+	public static String viewAllusers(ArrayList<admin_Class> userlist) {
+		String output = String.format("%-10s %-10s %-20s %-20s %-10s\n", "Name", "role", "email", "password", "status");
+		String output1 = "No users currently";
+		boolean hasUsers = false;
+		
+		if (userlist.size() == 0) {
+			hasUsers = false;
+		}else {
+			for (admin_Class x : userlist) {
+				output += String.format("%-10s %-10s %-20s %-20s %-10s\n", x.getName(), x.getRole(), x.getEmail(), x.getPassword(), x.getStatus());	
+				hasUsers = true;
+			}
+		}
+		if (hasUsers) {
+			return output;
+		}else {
+			return output1;
+		}
+		
 	}
+	
+	// Zi Hao
+	public static void deleteUserbyName(ArrayList<admin_Class> userlist, String username) {
+		boolean canDelete = false;
+		if(userlist.size() == 0) {
+			canDelete = true;
+		}else {
+			for (int i = 0; i < userlist.size(); i++) {
+				if (userlist.get(i).getName().equalsIgnoreCase(username)) {
+					userlist.remove(i);
+					canDelete = true;
+				}
+			}
+		}
+		if (canDelete) {
+			System.out.println("User deleted successfully");
+		}else {
+			System.out.println("User failed to delete");
+		}	
+	}
+	
 	
 	public void customerPage() {
 		//Add what customer can do
