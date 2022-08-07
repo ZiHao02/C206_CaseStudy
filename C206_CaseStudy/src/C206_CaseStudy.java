@@ -174,7 +174,7 @@ public class C206_CaseStudy {
 		}	
 	}
 	
-	
+	// Jaden
 	public void customerPage() {
 		//Add what customer can do
 		int option = -1;
@@ -192,7 +192,8 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-		
+	
+	//Jaden
 	private void menuCustomer() {
 		C206_CaseStudy.setHeader("Customer Interface");
 		System.out.println("1. Add Quotation Requests");
@@ -202,6 +203,7 @@ public class C206_CaseStudy {
 		
 		}
 	
+	//Jaden
 	public void addQuotationRequest() {
 		String propertyType = Helper.readString("Enter your property type: ");
 	    double areaSize = Helper.readDouble("Enter your area size: ");
@@ -229,6 +231,7 @@ public class C206_CaseStudy {
 		
 	}
 	
+	//Jaden
 	public void viewAllRequests() {
 		String output = String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "Property Type", "Area Size", "Requestor Name", 
 				"Contact Number", "Email", "Budget", "Completion Date", "Renovation Type", "Number of Rooms", "Number of Toilets", 
