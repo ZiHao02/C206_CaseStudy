@@ -172,10 +172,11 @@ public class C206_CaseStudy {
 		String renovationStyle = Helper.readString("Enter your Renovation Style: ");
 		String urgentRequest = Helper.readString("Is it an urgent request?: ");
 		
-		if(!propertyType.isEmpty() && areaSize >= 0 & !requestorName.isEmpty() && contactNumber >= 0 && !email.isEmpty() && budget > 0 && !completionDate.isEmpty()  && !renovationType.isEmpty() 
-				&& numberOfRooms >= 0 && numberOfToilets >= 0 && !renovationStyle.isEmpty() && !urgentRequest.isEmpty()) {
-			requestQuotationList.add(new QuotationRequests(propertyType, areaSize, requestorName, contactNumber, email, budget, completionDate, renovationType, numberOfRooms, numberOfToilets, 
-					renovationStyle, urgentRequest));
+		if(!propertyType.isEmpty() && areaSize >= 0 & !requestorName.isEmpty() && contactNumber >= 0 && !email.isEmpty() && budget > 0 
+				&& !completionDate.isEmpty()  && !renovationType.isEmpty() && numberOfRooms >= 0 && numberOfToilets >= 0 
+				&& !renovationStyle.isEmpty() && !urgentRequest.isEmpty()) {
+			requestQuotationList.add(new QuotationRequests(propertyType, areaSize, requestorName, contactNumber, email, budget, 
+					completionDate, renovationType, numberOfRooms, numberOfToilets, renovationStyle, urgentRequest));
 			System.out.println("Quotation Request added successfully.");
 		}
 		else {
@@ -185,8 +186,9 @@ public class C206_CaseStudy {
 	}
 	
 	public void viewAllRequests() {
-		String output = String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "Property Type", "Area Size", "Requestor Name", "Contact Number", "Email", "Budget", "Completion Date", 
-				"Renovation Type", "Number of Rooms", "Number of Toilets", "Renovation Style (optional)", "Urgent Request?");
+		String output = String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "Property Type", "Area Size", "Requestor Name", 
+				"Contact Number", "Email", "Budget", "Completion Date", "Renovation Type", "Number of Rooms", "Number of Toilets", 
+				"Renovation Style (optional)", "Urgent Request?");
 		for (QuotationRequests qr : requestQuotationList) {
 			output += String.format("%-84s\n", qr.toString());
 		}
@@ -295,7 +297,8 @@ public class C206_CaseStudy {
 		int sYDate = Helper.readInt("Enter year of start date > ");
 		double tSum = Helper.readDouble("Enter total quotation amount > ");
 
-		if(!rID.isEmpty() && !qID.isEmpty() & !rc.isEmpty() && !rcItem.isEmpty() && itemPrice > 0 && !dName.isEmpty() && sDDate > 0 && sMDate > 0 && sYDate > 0 && tSum > 0) {
+		if(!rID.isEmpty() && !qID.isEmpty() & !rc.isEmpty() && !rcItem.isEmpty() && itemPrice > 0 && !dName.isEmpty() && sDDate > 0 
+				&& sMDate > 0 && sYDate > 0 && tSum > 0) {
 			qt = new Quotations(rID.toUpperCase(), qID.toUpperCase(), rc, rcItem, itemPrice, dName, LocalDate.of(sYDate, sMDate, sDDate), tSum);
 		}
 		return qt;
