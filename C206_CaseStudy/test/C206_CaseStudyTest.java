@@ -1,7 +1,9 @@
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +18,24 @@ public class C206_CaseStudyTest {
 	private Quotations qt5;
 	private Quotations qt6;
 	
+	//Zi Hao
+	private admin_Class user1;
+	private admin_Class user2;
+	private admin_Class user3;
+	private admin_Class user4;
+	private admin_Class user5;
+	private admin_Class user6;
+
+	private Package pack1;
+	private Package pack2;
+	private Package pack3;
+	private Package pack4;
+	private Package pack5;
+	private Package pack6;
+	
 	private ArrayList<Quotations> quotationList	= new ArrayList<Quotations>();
+	private ArrayList<admin_Class> userList = new ArrayList<admin_Class>();
+	private ArrayList<Package> packageList = new ArrayList<Package>();
 	
 	public C206_CaseStudyTest() {
 		super();
@@ -32,6 +51,25 @@ public class C206_CaseStudyTest {
 		qt4 = new Quotations("RV004", "QT016", "Toilet", "Door", 120.00, "Darrol", LocalDate.of(2023, 02, 28), 175.00);
 		qt5 = new Quotations("RV005", "QT015", "Bedroom", "Window", 170.00, "Anne", LocalDate.of(2023, 05, 21), 260.00);
 		qt6 = new  Quotations("RV006", "QT018", "Kitchen", "Basin", 120.00, "Candy", LocalDate.of(2023, 04, 12), 175.00);
+		
+
+		//Zi Hao
+		user1 = new admin_Class("Bob", "User", "bob@mail.com", "SecurePa$sW0rd");	
+		user2 = new admin_Class("Alice", "User", "alice@mail.com", "SecurePa$sW0rd");
+		user3 = new admin_Class("Emily", "User", "emily@mail.com", "SecurePa$sW0rd");	
+		user4 = new admin_Class("Emily", "User", "emily@mail.com", "SecurePa$sW0rd");
+		user5 = new admin_Class("Alice", "User", "alice@mail.com", "SecurePa$sW0rd");
+		user6 = new admin_Class("Anna", "User", "anna@mail.com", "SecurePa$sW0rd");
+
+		//kihyeok
+		SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
+		pack1 = new Package("PK1", "First Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack2 = new Package("PK2", "Second Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack3 = new Package("PK3", "Third Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack4 = new Package("PK3", "Fourth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack5 = new Package("PK5", "Fifth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack6 = new Package("PK6", "Sixth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+
 	}
 	
 	@Test
@@ -104,7 +142,6 @@ public class C206_CaseStudyTest {
 				"Anne", "28 Dec 2022", "$250.0");
 		assertEquals("Test that ViewAllQuotationlist is", testOutput, allQuotations);
 	}
-	
 	@Test
 	//phoebe
 	public void testDeleteQuotation() {
@@ -128,6 +165,146 @@ public class C206_CaseStudyTest {
 		//test if non-existed quotation id can delete
 		C206_CaseStudy.deleteQuotation(quotationList, "QT017");
 		assertEquals("Test that Quotation arraylist size is 1 after deleting", 1, quotationList.size());
+	}
+	
+	
+	@Test
+	//Zi Hao
+	public void testAddUsers() {
+		//check list is not null so that adding of user is possible
+		assertNotNull("Check if there is an arraylist to add users to", userList);
+		
+		//normal
+		//from an empty list, after adding 1 user, the size of the list 1 should be 1
+		C206_CaseStudy.addUsers(userList, user1);
+		assertEquals("Check that User arraylist size is 1 after adding", 1, userList.size());
+		assertSame("Check that User is added", user1, userList.get(0));
+		
+		//normal
+		//from the list above after adding 1, add 1 more item, the size of the list should be 2
+		C206_CaseStudy.addUsers(userList, user2);
+		assertEquals("Check that User arraylist size is 2 after adding", 2, userList.size());
+		assertSame("Check that User is added", user2, userList.get(1));
+		
+		//normal
+		//from the list above after adding 2, add 1 more item, the size of the list should be 3
+		C206_CaseStudy.addUsers(userList, user3);
+		assertEquals("Check that User arraylist size is 3 after adding", 3, userList.size());		
+		assertSame("Check that User is added", user3, userList.get(2));
+		
+		//error
+		//from the list above after adding 3, adding 1 more item with duplicated username, the size of the list should still be 3
+		C206_CaseStudy.addUsers(userList, user4);
+		assertEquals("Check that User arraylist size is 3 after adding", 3, userList.size());
+		
+		//error
+		//from the list above after adding 3, adding 1 more item with duplicated username, the size of the list should still be 3
+		C206_CaseStudy.addUsers(userList, user5);
+		assertEquals("Check that User arraylist size is 3 after adding", 3, userList.size());
+		
+		//normal
+		//from the list above after adding 3, adding 1 more item, the size of the list should still be 4
+		C206_CaseStudy.addUsers(userList, user6);
+		assertEquals("Check that User arraylist size is 4 after adding", 4, userList.size());		
+		assertSame("Check that User is added", user6, userList.get(3));
+	}
+	@Test
+	// Zi Hao
+	public void testRetrieveAllUsers() {
+		//test to ensure the list is not null but empty
+		assertNotNull("Test if there is valid userlist arraylist to retrieve user", userList);
+		
+		//error
+		//test if the list of quotations retrieved is empty
+		String Nousers = C206_CaseStudy.viewAllusers(userList);
+		String testOutput = "No users currently";
+		assertEquals("Check that ViewAllQuotationlist is", testOutput, Nousers);
+		
+		//normal
+		//if given an empty list, after adding 3 users, test if the size of the list is 3
+		C206_CaseStudy.addUsers(userList, user1);
+		C206_CaseStudy.addUsers(userList, user2);
+		C206_CaseStudy.addUsers(userList, user3);
+		assertEquals("Test that user arraylist size is 3 after adding", 3, userList.size());
+		
+		//normal
+		//test if the expected output string is the same as the list of users retrieved from C206_CaseStudy
+		String allusers = C206_CaseStudy.viewAllusers(userList);
+		
+		testOutput =  String.format("%-10s %-10s %-20s %-20s %-10s\n", "Name", "role", "email", "password", "status");
+		testOutput += String.format("%-10s %-10s %-20s %-20s %-10s\n", "Bob", "User", "bob@mail.com", "SecurePa$sW0rd", "New");
+		testOutput += String.format("%-10s %-10s %-20s %-20s %-10s\n", "Alice", "User", "alice@mail.com", "SecurePa$sW0rd", "New");
+		testOutput += String.format("%-10s %-10s %-20s %-20s %-10s\n", "Emily", "User", "emily@mail.com", "SecurePa$sW0rd", "New");
+		assertEquals("Test that viewAllusers is", testOutput, allusers);
+	}
+	@Test
+	// Zi Hao
+	public void testDeleteUsers() {
+		//test to ensure the list is not null but empty
+		assertNotNull("Test if there is a valid user arraylist to delete item", userList);
+		
+		//normal
+		//test if the size of the list is 0 after adding 1 and deleting 1
+		C206_CaseStudy.addUsers(userList, user1);
+		C206_CaseStudy.deleteUserbyName(userList, "Bob");
+		assertEquals("Test that user arraylist size is 0 after adding and deleting", 0, userList.size());
+		
+		//normal
+		//test if the size of the list is 1 after adding 2 and deleting 1
+		C206_CaseStudy.addUsers(userList, user1);
+		C206_CaseStudy.addUsers(userList, user2);
+		C206_CaseStudy.deleteUserbyName(userList, "Alice");
+		assertEquals("Test that user arraylist size is 1 after deleting", 1, userList.size());
+		
+		//error
+		//test if non-existed quotation id can delete
+		C206_CaseStudy.deleteUserbyName(userList, "Jack");
+		assertEquals("Test that user arraylist size is 1 after deleting", 1, userList.size());
+	}
+
+	@Test
+	//kihyeok
+	public void testAddPackages() {
+		//check list is not null
+		assertNotNull("Check if packageList is not null", packageList);
+		
+		//normal
+		//add 1 item to empty list. new list should now contain 1
+		C206_CaseStudy.addPackage(packageList, pack1);
+		assertEquals("Check packageList size is 1 after adding 1", 1, packageList.size());
+		assertSame("Check package is added", pack1, packageList.get(0));
+		
+		//normal
+		//add 2 items to list. new list should now contain 3
+		C206_CaseStudy.addPackage(packageList, pack2);
+		C206_CaseStudy.addPackage(packageList, pack3);
+		assertEquals("Check packageList size is 3 after adding 2", 3, packageList.size());
+		assertSame("Check package2 is added", pack2, packageList.get(1));
+		assertSame("Check package3 is added", pack3, packageList.get(2));
+		
+		//error
+		//adding a duplicate code will result in a failure and there still would be 3 items in the list
+		C206_CaseStudy.addPackage(packageList, pack4);
+		assertEquals("Check packageList size is 3 after adding", 3, packageList.size());
+	}
+
+	@Test
+	//kihyeok
+	public void testDeletePackages() {
+		//check list is not null
+		assertNotNull("Check if packageList is not null", packageList);
+		
+		//normal
+		//add 1 item to empty list, then delete it. new list should now contain 0
+		C206_CaseStudy.addPackage(packageList, pack1);
+		C206_CaseStudy.deletePackage(packageList, "PK1");
+		assertEquals("Check packageList size is still 0 after adding and deleting 1", 0, packageList.size());
+		
+		//error
+		//add 1 item and delete non-existent item. new list should now contain 1
+		C206_CaseStudy.addPackage(packageList, pack2);
+		C206_CaseStudy.deletePackage(packageList, "PK8");
+		assertEquals("Check packageList size is 1 after adding 1 and failing to delete 1", 1, packageList.size());
 	}
 
 	@After

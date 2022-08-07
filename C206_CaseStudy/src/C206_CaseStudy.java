@@ -1,11 +1,15 @@
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+
 
 public class C206_CaseStudy {
 
 	private static ArrayList<admin_Class> userList = new ArrayList<admin_Class>();
 	private static ArrayList <QuotationRequests> requestQuotationList = new ArrayList<QuotationRequests>();
 	private static ArrayList <Quotations> quotationList = new ArrayList<Quotations>();
+	private static ArrayList <Package> packageList = new ArrayList<Package>();
 	private static final int OPTION_VIEW = 1;
 	private static final int OPTION_ADD = 2;
 	private static final int OPTION_DELETE = 3;
@@ -32,7 +36,18 @@ public class C206_CaseStudy {
 		quotationList.add(new Quotations("RV001", "QT002", "Bedroom", "Closet", 350.00, "Anne", LocalDate.of(2022, 10, 12), 550.00));
 		quotationList.add(new Quotations("RV002", "QT003", "Living Room", "Door", 200.00, "Ben", LocalDate.of(2022, 12, 14), 220.00));
 		quotationList.add(new Quotations("RV003", "QT004", "Toilet", "Flooring", 550.00, "Carrol", LocalDate.of(2023, 05, 9), 600.00));
-		
+		try {
+		SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
+		packageList.add(new Package("PK1", "First Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK2", "Second Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK3", "Third Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK3", "Fourth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK5", "Fifth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK6", "Sixth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		} catch (Exception e) 
+		{
+			
+		}
 		mw.start();
 	}
 	
@@ -60,21 +75,34 @@ public class C206_CaseStudy {
 	}
 	
 	public void adminPage() {
-		int option = -1;
-		while (option != 4) {
-			menuAdmin();
-			option = Helper.readInt("Enter choice > ");
-			if (option == OPTION_VIEW) {
-				viewAllusers();
-			} else if (option == OPTION_ADD) {
-				addUsers();
-			} else if (option == OPTION_DELETE) {
-				deleteUserbyName();
-			}else if (option == OPTION_QUIT) {
-				System.out.println("Thank You~");
-			}
-		}
-	}
+        int option = -1;
+        while (option != 7) {
+            menuAdmin();
+            option = Helper.readInt("Enter choice > ");
+            if (option == OPTION_VIEW) {
+                System.out.println(C206_CaseStudy.viewAllusers(userList));
+            } else if (option == OPTION_ADD) {
+                admin_Class user = inputUser();
+                C206_CaseStudy.addUsers(userList, user);
+            } else if (option == OPTION_DELETE) {
+                String username = Helper.readString("\nEnter User's name > ");
+                C206_CaseStudy.deleteUserbyName(userList, username);
+            }
+            else if (option == 4) {
+                C206_CaseStudy.viewAllPackages(packageList);
+            }
+            else if (option == 5) {
+                C206_CaseStudy.inputPackage(packageList);
+            }
+            else if (option == 6) {
+                String code = Helper.readString("\nEnter package code > ");
+                C206_CaseStudy.deletePackage(packageList, code);
+            }
+            else if (option == OPTION_QUIT) {
+                System.out.println("Thank You~");
+            }
+        }
+    }
 		
 	private void menu() {
 		C206_CaseStudy.setHeader("Home Page");
@@ -85,51 +113,95 @@ public class C206_CaseStudy {
 	}
 	
 	private void menuAdmin() {
-		C206_CaseStudy.setHeader("Admin Interface");
-		System.out.println("1. View All Users");
-		System.out.println("2. Adding New Users");
-		System.out.println("3. Deleting Users by Name");
-		System.out.println("4. Quit");
-	}
-		
-	public void addUsers() {
+        C206_CaseStudy.setHeader("Admin Interface");
+        System.out.println("1. View All Users");
+        System.out.println("2. Adding New Users");
+        System.out.println("3. Deleting Users by Name");
+        System.out.println("\n4. View All Packages");
+        System.out.println("5. Add Package");
+        System.out.println("6. Add Package by Code");
+        System.out.println("\n7. Quit");
+    }
+	
+	// Zi Hao
+	public admin_Class inputUser() {
+		admin_Class user = new admin_Class("", "", "", "");
 		String name = Helper.readString("Enter New User's Name: ");
 		String role = Helper.readString("Enter Role: ");
 		String email = Helper.readString("Enter Email: ");
 		String password = Helper.readString("Enter Passowrd: ");
-		
 		if (!name.isEmpty() && !role.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-			userList.add(new admin_Class(name, role, email, password));
-			System.out.println("New User Added");
-		}else {
-			System.out.println("Please enter a valid input");
+			user = new admin_Class(name, role, email, password);
 		}
-	}	
-		
-	public void viewAllusers() {
-		String output = String.format("%-10s %-10s %-20s %-20s %-10s\n", "Name", "role", "email", "password", "status");
-		for (admin_Class x : userList) {
-			output += String.format("%-10s %-10s %-20s %-20s %-10s\n", x.getName(), x.getRole(), x.getEmail(), x.getPassword(), x.getStatus());
-			}
-		System.out.println(output);
+		return user;
 	}
 	
-	public void deleteUserbyName() {
-		String userInput = Helper.readString("Enter User's Name: ");
-		int x =0;
-		while (x < userList.size()) {
-			if (userList.get(x).getName().equalsIgnoreCase(userInput)) {
-				userList.remove(x);
-				System.out.println("User Removed");
+	// Zi Hao
+	public static void addUsers(ArrayList<admin_Class> userlist, admin_Class user) {
+		boolean canAdd = false;
+		if (userlist.size() == 0) {
+			canAdd = true;
+		}else if (userlist.size() > 0) {
+			for (int i = 0; i < userlist.size(); i++) {
+				if (!userlist.get(i).getName().equals(user.getName())) {
+					canAdd = true;
+				}else {
+					canAdd = false;
+					break;
+				}
 			}
-			x++;
 		}
-		if (x == userList.size() && x != 0) {
-			System.out.println("User Not Found");
-		}else if (x == 0) {
-			System.out.println("List is Currently Empty");
+		if (canAdd) {
+			userlist.add(user);
+			System.out.println("User added successfully");
+		}else {
+			System.out.println("User failed to add due to duplicaiton.");
 		}
+		
+	}	
+	
+	// Zi Hao
+	public static String viewAllusers(ArrayList<admin_Class> userlist) {
+		String output = String.format("%-10s %-10s %-20s %-20s %-10s\n", "Name", "role", "email", "password", "status");
+		String output1 = "No users currently";
+		boolean hasUsers = false;
+		
+		if (userlist.size() == 0) {
+			hasUsers = false;
+		}else {
+			for (admin_Class x : userlist) {
+				output += String.format("%-10s %-10s %-20s %-20s %-10s\n", x.getName(), x.getRole(), x.getEmail(), x.getPassword(), x.getStatus());	
+				hasUsers = true;
+			}
+		}
+		if (hasUsers) {
+			return output;
+		}else {
+			return output1;
+		}
+		
 	}
+	
+	// Zi Hao
+	public static void deleteUserbyName(ArrayList<admin_Class> userlist, String username) {
+		boolean canDelete = false;
+		if(userlist.size() == 0) {
+			canDelete = true;
+		}else {
+			for (int i = 0; i < userlist.size(); i++) {
+				if (userlist.get(i).getName().equalsIgnoreCase(username)) {
+					userlist.remove(i);
+					canDelete = true;
+				}
+			}
+		}
+		if (canDelete) {
+			System.out.println("User deleted successfully");
+		}else {
+			System.out.println("User failed to delete");
+		}	
+	}
+	
 	
 	public void customerPage() {
 		//Add what customer can do
@@ -350,5 +422,55 @@ public class C206_CaseStudy {
 		else {
 			System.out.println("Quotation failed to delete.");
 		}
+	}
+	//Kihyeok
+	public static void viewAllPackages(ArrayList<Package> packageList) {
+		String output = String.format("%-7s %-30s %-12s %-12s %-7s\n", "CODE", "DESCRIPTION", "START DATE", "END DATE", "AMOUNT");
+
+		for (Package p : packageList) {
+			output += String.format("%-7s %-30s %-12s %-12s %-7d\n", p.getCode(), p.getDescription(), p.getStartDate().toString(), p.getEndDate().toString(), p.getAmount());
+		}
+
+		System.out.println(output);
+	}
+
+	public static void inputPackage(ArrayList<Package> packageList) {
+
+		String code = Helper.readString("Enter Package Code > ");
+		String description = Helper.readString("Enter Description > ");
+		Date startDate = Helper.readDate("Enter Start Date > ");
+		Date endDate = Helper.readDate("Enter End Date > ");
+		int amount = Helper.readInt("Enter Package Amount > ");
+
+		addPackage(packageList, new Package(code, description, startDate, endDate, amount));
+	}
+
+	public static void addPackage(ArrayList<Package> packageList, Package p) {
+
+		for(int i=0; i<packageList.size(); i++)
+		{
+			if(p.getCode() == packageList.get(i).getCode())
+			{
+				System.out.println("Package failed to add due to duplication.");
+				return;
+			}
+		}
+
+		packageList.add(p);
+		System.out.println("Package added successfully.");
+	}
+
+	public static void deletePackage(ArrayList<Package> packageList, String code) {
+		for(int i=0; i<packageList.size(); i++)
+		{
+			if(code == packageList.get(i).getCode())
+			{
+				packageList.remove(i);
+				System.out.println("Package removed successfully.");
+				return;
+			}
+		}
+
+		System.out.println("Package failed to delete.");
 	}
 }
