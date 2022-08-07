@@ -1,8 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import com.sun.tools.javac.util.JCDiagnostic.Fragment;
 
 public class C206_CaseStudy {
 
