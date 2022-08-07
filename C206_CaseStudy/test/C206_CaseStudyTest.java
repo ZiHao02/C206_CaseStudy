@@ -1,7 +1,9 @@
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,9 +25,17 @@ public class C206_CaseStudyTest {
 	private admin_Class user4;
 	private admin_Class user5;
 	private admin_Class user6;
+
+	private Package pack1;
+	private Package pack2;
+	private Package pack3;
+	private Package pack4;
+	private Package pack5;
+	private Package pack6;
 	
 	private ArrayList<Quotations> quotationList	= new ArrayList<Quotations>();
-	private ArrayList<admin_Class> userList	= new ArrayList<admin_Class>();
+	private ArrayList<admin_Class> userList = new ArrayList<admin_Class>();
+	private ArrayList<Package> packageList = new ArrayList<Package>();
 	
 	public C206_CaseStudyTest() {
 		super();
@@ -50,6 +60,15 @@ public class C206_CaseStudyTest {
 		user4 = new admin_Class("Emily", "User", "emily@mail.com", "SecurePa$sW0rd");
 		user5 = new admin_Class("Alice", "User", "alice@mail.com", "SecurePa$sW0rd");
 		user6 = new admin_Class("Anna", "User", "anna@mail.com", "SecurePa$sW0rd");
+
+		//kihyeok
+		SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
+		pack1 = new Package("PK1", "First Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack2 = new Package("PK2", "Second Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack3 = new Package("PK3", "Third Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack4 = new Package("PK3", "Fourth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack5 = new Package("PK5", "Fifth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
+		pack6 = new Package("PK6", "Sixth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3);
 
 	}
 	
@@ -241,6 +260,51 @@ public class C206_CaseStudyTest {
 		//test if non-existed quotation id can delete
 		C206_CaseStudy.deleteUserbyName(userList, "Jack");
 		assertEquals("Test that user arraylist size is 1 after deleting", 1, userList.size());
+	}
+
+	@Test
+	//kihyeok
+	public void testAddPackages() {
+		//check list is not null
+		assertNotNull("Check if packageList is not null", packageList);
+		
+		//normal
+		//add 1 item to empty list. new list should now contain 1
+		C206_CaseStudy.addPackage(packageList, pack1);
+		assertEquals("Check packageList size is 1 after adding 1", 1, packageList.size());
+		assertSame("Check package is added", pack1, packageList.get(0));
+		
+		//normal
+		//add 2 items to list. new list should now contain 3
+		C206_CaseStudy.addPackage(packageList, pack2);
+		C206_CaseStudy.addPackage(packageList, pack3);
+		assertEquals("Check packageList size is 3 after adding 2", 3, packageList.size());
+		assertSame("Check package2 is added", pack2, packageList.get(1));
+		assertSame("Check package3 is added", pack3, packageList.get(2));
+		
+		//error
+		//adding a duplicate code will result in a failure and there still would be 3 items in the list
+		C206_CaseStudy.addPackage(packageList, pack4);
+		assertEquals("Check packageList size is 3 after adding", 3, packageList.size());
+	}
+
+	@Test
+	//kihyeok
+	public void testDeletePackages() {
+		//check list is not null
+		assertNotNull("Check if packageList is not null", packageList);
+		
+		//normal
+		//add 1 item to empty list, then delete it. new list should now contain 0
+		C206_CaseStudy.addPackage(packageList, pack1);
+		C206_CaseStudy.deletePackage(packageList, "PK1");
+		assertEquals("Check packageList size is still 0 after adding and deleting 1", 0, packageList.size());
+		
+		//error
+		//add 1 item and delete non-existent item. new list should now contain 1
+		C206_CaseStudy.addPackage(packageList, pack2);
+		C206_CaseStudy.deletePackage(packageList, "PK8");
+		assertEquals("Check packageList size is 1 after adding 1 and failing to delete 1", 1, packageList.size());
 	}
 
 	@After

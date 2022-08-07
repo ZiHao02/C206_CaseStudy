@@ -1,5 +1,7 @@
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class C206_CaseStudy {
@@ -7,6 +9,7 @@ public class C206_CaseStudy {
 	private static ArrayList<admin_Class> userList = new ArrayList<admin_Class>();
 	private static ArrayList <QuotationRequests> requestQuotationList = new ArrayList<QuotationRequests>();
 	private static ArrayList <Quotations> quotationList = new ArrayList<Quotations>();
+	private static ArrayList <Package> packageList = new ArrayList<Package>();
 	private static final int OPTION_VIEW = 1;
 	private static final int OPTION_ADD = 2;
 	private static final int OPTION_DELETE = 3;
@@ -33,7 +36,18 @@ public class C206_CaseStudy {
 		quotationList.add(new Quotations("RV001", "QT002", "Bedroom", "Closet", 350.00, "Anne", LocalDate.of(2022, 10, 12), 550.00));
 		quotationList.add(new Quotations("RV002", "QT003", "Living Room", "Door", 200.00, "Ben", LocalDate.of(2022, 12, 14), 220.00));
 		quotationList.add(new Quotations("RV003", "QT004", "Toilet", "Flooring", 550.00, "Carrol", LocalDate.of(2023, 05, 9), 600.00));
-		
+		try {
+		SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
+		packageList.add(new Package("PK1", "First Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK2", "Second Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK3", "Third Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK3", "Fourth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK5", "Fifth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		packageList.add(new Package("PK6", "Sixth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
+		} catch (Exception e) 
+		{
+			
+		}
 		mw.start();
 	}
 	
@@ -61,23 +75,34 @@ public class C206_CaseStudy {
 	}
 	
 	public void adminPage() {
-		int option = -1;
-		while (option != 4) {
-			menuAdmin();
-			option = Helper.readInt("Enter choice > ");
-			if (option == OPTION_VIEW) {
-				System.out.println(C206_CaseStudy.viewAllusers(userList));
-			} else if (option == OPTION_ADD) {
-				admin_Class user = inputUser();
-				C206_CaseStudy.addUsers(userList, user);
-			} else if (option == OPTION_DELETE) {
-				String username = Helper.readString("\nEnter User's name > ");
-				C206_CaseStudy.deleteUserbyName(userList, username);
-			}else if (option == OPTION_QUIT) {
-				System.out.println("Thank You~");
-			}
-		}
-	}
+        int option = -1;
+        while (option != 7) {
+            menuAdmin();
+            option = Helper.readInt("Enter choice > ");
+            if (option == OPTION_VIEW) {
+                System.out.println(C206_CaseStudy.viewAllusers(userList));
+            } else if (option == OPTION_ADD) {
+                admin_Class user = inputUser();
+                C206_CaseStudy.addUsers(userList, user);
+            } else if (option == OPTION_DELETE) {
+                String username = Helper.readString("\nEnter User's name > ");
+                C206_CaseStudy.deleteUserbyName(userList, username);
+            }
+            else if (option == 4) {
+                C206_CaseStudy.viewAllPackages(packageList);
+            }
+            else if (option == 5) {
+                C206_CaseStudy.inputPackage(packageList);
+            }
+            else if (option == 6) {
+                String code = Helper.readString("\nEnter package code > ");
+                C206_CaseStudy.deletePackage(packageList, code);
+            }
+            else if (option == OPTION_QUIT) {
+                System.out.println("Thank You~");
+            }
+        }
+    }
 		
 	private void menu() {
 		C206_CaseStudy.setHeader("Home Page");
@@ -88,12 +113,15 @@ public class C206_CaseStudy {
 	}
 	
 	private void menuAdmin() {
-		C206_CaseStudy.setHeader("Admin Interface");
-		System.out.println("1. View All Users");
-		System.out.println("2. Adding New Users");
-		System.out.println("3. Deleting Users by Name");
-		System.out.println("4. Quit");
-	}
+        C206_CaseStudy.setHeader("Admin Interface");
+        System.out.println("1. View All Users");
+        System.out.println("2. Adding New Users");
+        System.out.println("3. Deleting Users by Name");
+        System.out.println("\n4. View All Packages");
+        System.out.println("5. Add Package");
+        System.out.println("6. Add Package by Code");
+        System.out.println("\n7. Quit");
+    }
 	
 	// Zi Hao
 	public admin_Class inputUser() {
@@ -174,7 +202,7 @@ public class C206_CaseStudy {
 		}	
 	}
 	
-	// Jaden
+	
 	public void customerPage() {
 		//Add what customer can do
 		int option = -1;
@@ -192,8 +220,7 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-	
-	//Jaden
+		
 	private void menuCustomer() {
 		C206_CaseStudy.setHeader("Customer Interface");
 		System.out.println("1. Add Quotation Requests");
@@ -203,7 +230,6 @@ public class C206_CaseStudy {
 		
 		}
 	
-	//Jaden
 	public void addQuotationRequest() {
 		String propertyType = Helper.readString("Enter your property type: ");
 	    double areaSize = Helper.readDouble("Enter your area size: ");
@@ -231,7 +257,6 @@ public class C206_CaseStudy {
 		
 	}
 	
-	//Jaden
 	public void viewAllRequests() {
 		String output = String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "Property Type", "Area Size", "Requestor Name", 
 				"Contact Number", "Email", "Budget", "Completion Date", "Renovation Type", "Number of Rooms", "Number of Toilets", 
@@ -397,5 +422,55 @@ public class C206_CaseStudy {
 		else {
 			System.out.println("Quotation failed to delete.");
 		}
+	}
+	//Kihyeok
+	public static void viewAllPackages(ArrayList<Package> packageList) {
+		String output = String.format("%-7s %-30s %-12s %-12s %-7s\n", "CODE", "DESCRIPTION", "START DATE", "END DATE", "AMOUNT");
+
+		for (Package p : packageList) {
+			output += String.format("%-7s %-30s %-12s %-12s %-7d\n", p.getCode(), p.getDescription(), p.getStartDate().toString(), p.getEndDate().toString(), p.getAmount());
+		}
+
+		System.out.println(output);
+	}
+
+	public static void inputPackage(ArrayList<Package> packageList) {
+
+		String code = Helper.readString("Enter Package Code > ");
+		String description = Helper.readString("Enter Description > ");
+		Date startDate = Helper.readDate("Enter Start Date > ");
+		Date endDate = Helper.readDate("Enter End Date > ");
+		int amount = Helper.readInt("Enter Package Amount > ");
+
+		addPackage(packageList, new Package(code, description, startDate, endDate, amount));
+	}
+
+	public static void addPackage(ArrayList<Package> packageList, Package p) {
+
+		for(int i=0; i<packageList.size(); i++)
+		{
+			if(p.getCode() == packageList.get(i).getCode())
+			{
+				System.out.println("Package failed to add due to duplication.");
+				return;
+			}
+		}
+
+		packageList.add(p);
+		System.out.println("Package added successfully.");
+	}
+
+	public static void deletePackage(ArrayList<Package> packageList, String code) {
+		for(int i=0; i<packageList.size(); i++)
+		{
+			if(code == packageList.get(i).getCode())
+			{
+				packageList.remove(i);
+				System.out.println("Package removed successfully.");
+				return;
+			}
+		}
+
+		System.out.println("Package failed to delete.");
 	}
 }
