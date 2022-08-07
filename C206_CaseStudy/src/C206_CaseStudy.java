@@ -319,7 +319,6 @@ public class C206_CaseStudy {
 				}
 			}
 		}	
-		System.out.println(canAdd);
 		if(canAdd == true) {
 			quotationList.add(qt);
 			System.out.println("Quotation added successfully.");
