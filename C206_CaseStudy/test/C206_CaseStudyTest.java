@@ -203,7 +203,7 @@ public class C206_CaseStudyTest {
 		assertEquals("Check that User arraylist size is 3 after adding", 3, userList.size());
 		
 		//normal
-		//from the list above after adding 3, adding 1 more item, the size of the list should still be 4
+		//from the list above after adding 3, adding 1 more item, the size of the list should be 4
 		C206_CaseStudy.addUsers(userList, user6);
 		assertEquals("Check that User arraylist size is 4 after adding", 4, userList.size());		
 		assertSame("Check that User is added", user6, userList.get(3));
