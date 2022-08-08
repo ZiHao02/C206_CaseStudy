@@ -26,6 +26,12 @@ public class C206_CaseStudyTest {
 	private admin_Class user5;
 	private admin_Class user6;
 
+	private QuotationRequests request1;
+	private QuotationRequests request2;
+	private QuotationRequests request3;
+	private QuotationRequests request4;
+	
+	
 	private Package pack1;
 	private Package pack2;
 	private Package pack3;
@@ -35,6 +41,7 @@ public class C206_CaseStudyTest {
 	
 	private ArrayList<Quotations> quotationList	= new ArrayList<Quotations>();
 	private ArrayList<admin_Class> userList = new ArrayList<admin_Class>();
+	private static ArrayList <QuotationRequests> requestQuotationList = new ArrayList<QuotationRequests>();
 	private ArrayList<Package> packageList = new ArrayList<Package>();
 	
 	public C206_CaseStudyTest() {
@@ -60,6 +67,12 @@ public class C206_CaseStudyTest {
 		user4 = new admin_Class("Emily", "User", "emily@mail.com", "SecurePa$sW0rd");
 		user5 = new admin_Class("Alice", "User", "alice@mail.com", "SecurePa$sW0rd");
 		user6 = new admin_Class("Anna", "User", "anna@mail.com", "SecurePa$sW0rd");
+		
+		//Jaden
+		request1 = new QuotationRequests("HDB", 85, "John", 97324510, "john@mail.com", 640.00, "2022/7/21", "Toilet", 6, 4, "No", "Yes");
+		request2 = new QuotationRequests("HDB", 85, "John", 97324510, "john@mail.com", 640.00, "2022/7/21", "Toilet", 6, 4, "No", "Yes");
+		request3 = new QuotationRequests("Landed", 420, "Adam", 91336502, "adam@mail.com", 946.00, "2022/7/21", "Room", 8, 3, "Modern", "No");
+		request4 = new QuotationRequests("Private", 98, "Ben", 67882174, "ben@mail.com", 508.00, "2022/7/21", "Kitchen", 4, 2, "No", "Yes");
 
 		//kihyeok
 		SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -264,6 +277,80 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.deleteUserbyName(userList, "Jack");
 		assertEquals("Test that user arraylist size is 1 after deleting", 1, userList.size());
 	}
+	
+	@Test
+	//Jaden
+	public void testAddQuotationRequests() {
+		
+		assertNotNull("Check if there is valid Quotation arraylist to add to", requestQuotationList);
+		
+		
+		C206_CaseStudy.addRequests(requestQuotationList, request1);
+		assertEquals("Check that Quotation Requests arraylist size is 1 after adding", 1, requestQuotationList.size());
+		assertSame("Check that Request is added", request1, requestQuotationList.get(0));
+		
+		
+		C206_CaseStudy.addRequests(requestQuotationList, request2);
+		assertEquals("Check that Quotation Requests arraylist size is 2 after adding", 2, requestQuotationList.size());
+		assertSame("Check that Request is added", request2, requestQuotationList.get(1));
+		
+		
+		C206_CaseStudy.addRequests(requestQuotationList, request3);
+		assertEquals("Check that Quotation arraylist size is 3 after adding", 3, quotationList.size());		
+		assertSame("Check that Request is added", request3, requestQuotationList.get(2));
+		
+		
+		C206_CaseStudy.addRequests(requestQuotationList, request4);
+		assertEquals("Check that Quotation arraylist size is 3 after adding", 3, requestQuotationList.size());
+		
+	}
+	@Test
+	//Jaden
+	public void testRetrieveAllQuotationRequests() {
+		
+		assertNotNull("Test if there is valid Quotation Request arraylist to retrieve item", requestQuotationList);
+		
+		
+		String allRequests = C206_CaseStudy.retrieveAllQuotationRequests(requestQuotationList, "John");
+		String testOutput = "Requestor Name not found.";
+		assertEquals("Check that ViewAllQuotationRequests list is", testOutput, allRequests);
+		
+		
+		C206_CaseStudy.addRequests(requestQuotationList, request1);
+		C206_CaseStudy.addRequests(requestQuotationList, request2);
+		C206_CaseStudy.addRequests(requestQuotationList, request3);
+		assertEquals("Test that Quotation arraylist size is 3 after adding", 3, quotationList.size());
+		
+		
+		allRequests = C206_CaseStudy.retrieveAllQuotationRequests(requestQuotationList, "Ben");
+		testOutput =  String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s %20s %-10s %-21s\n", "Property Type", "Area Size", "Requestor Name", "Contact Number", "Email", "Budget", "Completion Date", "Renovation Type", "Number of Rooms", "Number of Toilets", "Renovation Style?", "Urgent Request?");
+		testOutput += String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s %20s %-10s %-21s\n", "Private", "98", "Ben", "67882174", "ben@mail.com", "508.00", "2022/7/21", "600.00", "Kitchen", "4", "2", "No", "Yes");
+		testOutput += String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s %20s %-10s %-21s\n", "Landed", "400", "Ben", "61947182", "ben@mail.com", "900.00", "2022/9/2", "500.00", "Toilet", "3", "4", "Yes", "No");
+		assertEquals("Test that ViewAllQuotationlist is", testOutput, allRequests);
+	}
+	@Test
+	//Jaden
+	public void testDeleteQuotationRequests() {
+		
+		assertNotNull("Test if there is valid Quotation Requests arraylist to retrieve item", requestQuotationList);
+		
+		
+		C206_CaseStudy.addRequests(requestQuotationList, request1);
+		C206_CaseStudy.deleteRequest(requestQuotationList, "John");
+		assertEquals("Test that Quotation Request arraylist size is 0 after adding", 0, requestQuotationList.size());
+		
+		
+		C206_CaseStudy.addRequests(requestQuotationList, request1);
+		C206_CaseStudy.addRequests(requestQuotationList, request2);
+		C206_CaseStudy.deleteRequest(requestQuotationList, "David");
+		assertEquals("Test that Quotation Request arraylist size is 1 after deleting", 1, requestQuotationList.size());
+		
+		
+		C206_CaseStudy.deleteRequest(requestQuotationList, "Adam");
+		assertEquals("Test that Quotation Request arraylist size is 1 after deleting", 1, requestQuotationList.size());
+	}
+
+	
 
 	@Test
 	//kihyeok
