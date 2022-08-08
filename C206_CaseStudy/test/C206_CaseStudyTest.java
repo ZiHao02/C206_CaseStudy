@@ -112,6 +112,7 @@ public class C206_CaseStudyTest {
 		assertEquals("Check that Quotation arraylist size is 4 after adding", 4, quotationList.size());		
 		assertSame("Check that Quotation is added", qt6, quotationList.get(3));
 	}
+	
 	@Test
 	//phoebe
 	public void testRetrieveAllQuotation() {
@@ -142,6 +143,7 @@ public class C206_CaseStudyTest {
 				"Anne", "28 Dec 2022", "$250.0");
 		assertEquals("Test that ViewAllQuotationlist is", testOutput, allQuotations);
 	}
+	
 	@Test
 	//phoebe
 	public void testDeleteQuotation() {
@@ -166,7 +168,6 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.deleteQuotation(quotationList, "QT017");
 		assertEquals("Test that Quotation arraylist size is 1 after deleting", 1, quotationList.size());
 	}
-	
 	
 	@Test
 	//Zi Hao
@@ -208,6 +209,7 @@ public class C206_CaseStudyTest {
 		assertEquals("Check that User arraylist size is 4 after adding", 4, userList.size());		
 		assertSame("Check that User is added", user6, userList.get(3));
 	}
+	
 	@Test
 	// Zi Hao
 	public void testRetrieveAllUsers() {
@@ -237,6 +239,7 @@ public class C206_CaseStudyTest {
 		testOutput += String.format("%-10s %-10s %-20s %-20s %-10s\n", "Emily", "User", "emily@mail.com", "SecurePa$sW0rd", "New");
 		assertEquals("Test that viewAllusers is", testOutput, allusers);
 	}
+	
 	@Test
 	// Zi Hao
 	public void testDeleteUsers() {
