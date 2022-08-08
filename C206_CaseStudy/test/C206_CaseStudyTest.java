@@ -25,7 +25,8 @@ public class C206_CaseStudyTest {
 	private admin_Class user4;
 	private admin_Class user5;
 	private admin_Class user6;
-
+	
+	//Jaden
 	private QuotationRequests request1;
 	private QuotationRequests request2;
 	private QuotationRequests request3;
