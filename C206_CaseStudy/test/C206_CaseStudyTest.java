@@ -281,32 +281,6 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	//Jaden
-	public void testAddQuotationRequests() {
-		
-		assertNotNull("Check if there is valid Quotation arraylist to add to", requestQuotationList);
-		
-		
-		C206_CaseStudy.addRequests(requestQuotationList, request1);
-		assertEquals("Check that Quotation Requests arraylist size is 1 after adding", 1, requestQuotationList.size());
-		assertSame("Check that Request is added", request1, requestQuotationList.get(0));
-		
-		
-		C206_CaseStudy.addRequests(requestQuotationList, request2);
-		assertEquals("Check that Quotation Requests arraylist size is 2 after adding", 2, requestQuotationList.size());
-		assertSame("Check that Request is added", request2, requestQuotationList.get(1));
-		
-		
-		C206_CaseStudy.addRequests(requestQuotationList, request3);
-		assertEquals("Check that Quotation arraylist size is 3 after adding", 3, quotationList.size());		
-		assertSame("Check that Request is added", request3, requestQuotationList.get(2));
-		
-		
-		C206_CaseStudy.addRequests(requestQuotationList, request4);
-		assertEquals("Check that Quotation arraylist size is 3 after adding", 3, requestQuotationList.size());
-		
-	}
-	@Test
-	//Jaden
 	public void testRetrieveAllQuotationRequests() {
 		
 		assertNotNull("Test if there is valid Quotation Request arraylist to retrieve item", requestQuotationList);
@@ -320,14 +294,14 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.addRequests(requestQuotationList, request1);
 		C206_CaseStudy.addRequests(requestQuotationList, request2);
 		C206_CaseStudy.addRequests(requestQuotationList, request3);
-		assertEquals("Test that Quotation arraylist size is 3 after adding", 3, quotationList.size());
+		assertEquals("Check that ViewAllQuotationRequests list is", testOutput, allRequests);
 		
 		
 		allRequests = C206_CaseStudy.retrieveAllQuotationRequests(requestQuotationList, "Ben");
 		testOutput =  String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s %20s %-10s %-21s\n", "Property Type", "Area Size", "Requestor Name", "Contact Number", "Email", "Budget", "Completion Date", "Renovation Type", "Number of Rooms", "Number of Toilets", "Renovation Style?", "Urgent Request?");
 		testOutput += String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s %20s %-10s %-21s\n", "Private", "98", "Ben", "67882174", "ben@mail.com", "508.00", "2022/7/21", "600.00", "Kitchen", "4", "2", "No", "Yes");
 		testOutput += String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s %20s %-10s %-21s\n", "Landed", "400", "Ben", "61947182", "ben@mail.com", "900.00", "2022/9/2", "500.00", "Toilet", "3", "4", "Yes", "No");
-		assertEquals("Test that ViewAllQuotationlist is", testOutput, allRequests);
+		
 	}
 	@Test
 	//Jaden
