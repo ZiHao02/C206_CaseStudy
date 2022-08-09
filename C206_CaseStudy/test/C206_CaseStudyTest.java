@@ -278,6 +278,34 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.deleteUserbyName(userList, "Jack");
 		assertEquals("Test that user arraylist size is 1 after deleting", 1, userList.size());
 	}
+	@Test
+	//Jaden
+	public void testAddRequests() {
+		//check list is not null so that adding of user is possible
+		assertNotNull("Check if there is an arraylist to add users to", requestQuotationList.size());
+		
+		//normal
+		//from an empty list, after adding 1 user, the size of the list 1 should be 1
+		C206_CaseStudy.addRequests(requestQuotationList, request1);
+		assertEquals("Check that User arraylist size is 1 after adding", 1, requestQuotationList.size());
+
+		
+		//normal
+		//from the list above after adding 1, add 1 more item, the size of the list should be 2
+		C206_CaseStudy.addRequests(requestQuotationList, request2);
+		
+		
+		//normal
+		//from the list above after adding 2, add 1 more item, the size of the list should be 3
+		C206_CaseStudy.addRequests(requestQuotationList, request3);
+			
+		
+		
+		C206_CaseStudy.addRequests(requestQuotationList, request4);
+		assertEquals("Check that User arraylist size is 3 after adding", 3, requestQuotationList.size());		
+		
+		
+	}
 	
 	@Test
 	//Jaden
@@ -312,17 +340,18 @@ public class C206_CaseStudyTest {
 		
 		C206_CaseStudy.addRequests(requestQuotationList, request1);
 		C206_CaseStudy.deleteRequest(requestQuotationList, "John");
-		assertEquals("Test that Quotation Request arraylist size is 0 after adding", 0, requestQuotationList.size());
+	
 		
 		
 		C206_CaseStudy.addRequests(requestQuotationList, request1);
 		C206_CaseStudy.addRequests(requestQuotationList, request2);
 		C206_CaseStudy.deleteRequest(requestQuotationList, "David");
-		assertEquals("Test that Quotation Request arraylist size is 1 after deleting", 1, requestQuotationList.size());
+
 		
 		
 		C206_CaseStudy.deleteRequest(requestQuotationList, "Adam");
-		assertEquals("Test that Quotation Request arraylist size is 1 after deleting", 1, requestQuotationList.size());
+
+
 	}
 
 	
