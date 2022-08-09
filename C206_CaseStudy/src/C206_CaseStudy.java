@@ -46,6 +46,7 @@ public class C206_CaseStudy {
 		packageList.add(new Package("PK6", "Sixth Package", dFormat.parse("2022-01-01"), dFormat.parse("2022-01-02"), 3));
 		} catch (Exception e) 
 		{
+			System.out.println(e);
 			
 		}
 		mw.start();
@@ -87,9 +88,9 @@ public class C206_CaseStudy {
             } else if (option == OPTION_DELETE) {
                 String username = Helper.readString("\nEnter User's name > ");
                 C206_CaseStudy.deleteUserbyName(userList, username);
-            }
+            } 
             else if (option == 4) {
-                C206_CaseStudy.viewAllPackages(packageList);
+               System.out.println( C206_CaseStudy.viewAllPackages(packageList));
             }
             else if (option == 5) {
                 C206_CaseStudy.inputPackage(packageList);
@@ -424,15 +425,16 @@ public class C206_CaseStudy {
 		}
 	}
 	//Kihyeok
-	public static void viewAllPackages(ArrayList<Package> packageList) {
-		String output = String.format("%-7s %-30s %-12s %-12s %-7s\n", "CODE", "DESCRIPTION", "START DATE", "END DATE", "AMOUNT");
+	public static String viewAllPackages(ArrayList<Package> packageList) {
+        SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String output = String.format("%-7s %-30s %-12s %-12s %-7s\n", "CODE", "DESCRIPTION", "START DATE", "END DATE", "AMOUNT");
 
-		for (Package p : packageList) {
-			output += String.format("%-7s %-30s %-12s %-12s %-7d\n", p.getCode(), p.getDescription(), p.getStartDate().toString(), p.getEndDate().toString(), p.getAmount());
-		}
+        for (Package p : packageList) {
+            output += String.format("%-7s %-30s %-12s %-12s %-7d\n", p.getCode(), p.getDescription(), dFormat.format(p.getStartDate()), dFormat.format(p.getEndDate()).toString(), p.getAmount());
+        }
 
-		System.out.println(output);
-	}
+        return output;
+    }
 
 	public static void inputPackage(ArrayList<Package> packageList) {
 

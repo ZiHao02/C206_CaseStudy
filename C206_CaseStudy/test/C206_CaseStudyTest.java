@@ -306,6 +306,37 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.deletePackage(packageList, "PK8");
 		assertEquals("Check packageList size is 1 after adding 1 and failing to delete 1", 1, packageList.size());
 	}
+	
+	@Test
+    public void testViewAllPackages() {
+        //check list is not null
+        assertNotNull("Check if packageList is not null", packageList);
+        
+        //normal
+        //Check that viewAllPackages output is correct when package list empty
+        String output = C206_CaseStudy.viewAllPackages(packageList);
+        String test = String.format("%-7s %-30s %-12s %-12s %-7s\n", "CODE", "DESCRIPTION", "START DATE", "END DATE", "AMOUNT");
+        assertEquals("Check that viewAllPackages output is correct when empty", test, output);
+        
+        //normal
+        //add 3 items to list. new list should now contain 3
+        C206_CaseStudy.addPackage(packageList, pack1);
+        C206_CaseStudy.addPackage(packageList, pack2);
+        C206_CaseStudy.addPackage(packageList, pack3);
+        assertEquals("Check packageList size is 3 after adding 3", 3, packageList.size());
+
+        //normal
+        //Check that viewAllPackages output is correct when package list contains 3
+        output = C206_CaseStudy.viewAllPackages(packageList);
+        test = String.format("%-7s %-30s %-12s %-12s %-7s\n", "CODE", "DESCRIPTION", "START DATE", "END DATE", "AMOUNT");
+        test += String.format("%-7s %-30s %-12s %-12s %-7s\n", "PK1", "First Package", "2022-01-01", "2022-01-02", "3");
+        test += String.format("%-7s %-30s %-12s %-12s %-7s\n", "PK2", "Second Package", "2022-01-01", "2022-01-02", "3");
+        test += String.format("%-7s %-30s %-12s %-12s %-7s\n", "PK3", "Third Package", "2022-01-01", "2022-01-02", "3");
+        assertEquals("Check that viewAllPackages output is correct when list contains 3", test, output);
+    }
+
+
+
 
 	@After
 	public void tearDown() throws Exception {
@@ -323,5 +354,4 @@ public class C206_CaseStudyTest {
 //		//fail("Not yet implemented"); 
 ////		assertTrue("C206_CaseStudy_SampleTest ",true);
 //	}
-
 }
