@@ -27,10 +27,10 @@ public class C206_CaseStudy {
 		userList.add(new admin_Class("Charile", "User", "bob@mail.com", "SecurePa$sW0rd"));	
 		userList.add(new admin_Class("Emily", "User", "bob@mail.com", "SecurePa$sW0rd"));	
 		
-		requestQuotationList.add(new QuotationRequests("HDB", 85, "John", 97324510, "john@mail.com", 640.00, "2022/7/21", 700.00, "Toilet", 6, 4, "No", "Yes"));
-		requestQuotationList.add(new QuotationRequests("HDB", 70, "David", 67014597, "david@mail.com", 251.00, "2022/7/21", 550.00, "Whole House", 5, 3, "No", "No"));
-		requestQuotationList.add(new QuotationRequests("Landed", 420, "Adam", 91336502, "adam@mail.com", 946.00, "2022/7/21", 220.00, "Room", 8, 3, "Modern", "No"));
-		requestQuotationList.add(new QuotationRequests("Private", 98, "Ben", 67882174, "ben@mail.com", 508.00, "2022/7/21", 600.00, "Kitchen", 4, 2, "No", "Yes"));
+		requestQuotationList.add(new QuotationRequests("HDB", 85, "John", 97324510, "john@mail.com", 640.00, "2022/7/21", "Toilet", 6, 4, "No", "Yes"));
+		requestQuotationList.add(new QuotationRequests("HDB", 70, "David", 67014597, "david@mail.com", 251.00, "2022/7/21", "Whole House", 5, 3, "No", "No"));
+		requestQuotationList.add(new QuotationRequests("Landed", 420, "Adam", 91336502, "adam@mail.com", 946.00, "2022/7/21", "Room", 8, 3, "Modern", "No"));
+		requestQuotationList.add(new QuotationRequests("Private", 98, "Ben", 67882174, "ben@mail.com", 508.00, "2022/7/21", "Kitchen", 4, 2, "No", "Yes"));
 		
 		quotationList.add(new Quotations("RV001", "QT001", "Kitchen", "Flooring", 550.00, "Anne", LocalDate.of(2022, 10, 8), 700.00));
 		quotationList.add(new Quotations("RV001", "QT002", "Bedroom", "Closet", 350.00, "Anne", LocalDate.of(2022, 10, 12), 550.00));
@@ -113,15 +113,15 @@ public class C206_CaseStudy {
 		System.out.println("4. Quit");
 	}
 	
-	private void menuAdmin() {
+	private static void menuAdmin() {
         C206_CaseStudy.setHeader("Admin Interface");
         System.out.println("1. View All Users");
         System.out.println("2. Adding New Users");
         System.out.println("3. Deleting Users by Name");
-        System.out.println("\n4. View All Packages");
+        System.out.println("4. View All Packages");
         System.out.println("5. Add Package");
         System.out.println("6. Add Package by Code");
-        System.out.println("\n7. Quit");
+        System.out.println("7. Quit");
     }
 	
 	// Zi Hao
@@ -202,88 +202,149 @@ public class C206_CaseStudy {
 			System.out.println("User failed to delete");
 		}	
 	}
-	
-	
+
+	//Jaden
 	public void customerPage() {
-		//Add what customer can do
+		
 		int option = -1;
 		while (option != 4) {
 			menuCustomer();
 			option = Helper.readInt("Enter choice > ");
+			
 			if (option == OPTION_VIEW) {
-				addQuotationRequest();
+				String requestorName = Helper.readString("Enter requestor name > ");
+				C206_CaseStudy.viewAllQuotationRequests(requestQuotationList);
+				
 			} else if (option == OPTION_ADD) {
-				viewAllRequests();
+				QuotationRequests request = inputRequests();
+				C206_CaseStudy.addRequests(requestQuotationList, request);
+				
 			} else if (option == OPTION_DELETE) {
-				deleteQuotationRequest();
+				String requestorName = Helper.readString("\nEnter requestor name > ");
+				C206_CaseStudy.deleteRequest(requestQuotationList, requestorName);
+				
 			}else if (option == OPTION_QUIT) {
-				System.out.println("Thank You :D");
+				System.out.println("Thank You~");
 			}
 		}
 	}
-		
-	private void menuCustomer() {
-		C206_CaseStudy.setHeader("Customer Interface");
-		System.out.println("1. Add Quotation Requests");
-		System.out.println("2. View All Quotation Requests");
-		System.out.println("3. Deleting Quotation Requests by Requestor Name");
-		System.out.println("4. Quit");
-		
-		}
 	
-	public void addQuotationRequest() {
-		String propertyType = Helper.readString("Enter your property type: ");
-	    double areaSize = Helper.readDouble("Enter your area size: ");
-	    String requestorName = Helper.readString("Enter your Requestor Name: ");
-	    int contactNumber = Helper.readInt("Enter your contact number: ");
-		String email = Helper.readString("Enter your email: ");
-		double budget = Helper.readDouble("Enter your budget: ");
-		String completionDate = Helper.readString("Enter your Target Completion Date: ");
-		String renovationType = Helper.readString("Enter your Renovation Type: ");
-		int numberOfRooms = Helper.readInt("Enter your number of rooms: ");
-		int numberOfToilets = Helper.readInt("Enter your number of toilets: ");
-		String renovationStyle = Helper.readString("Enter your Renovation Style: ");
-		String urgentRequest = Helper.readString("Is it an urgent request?: ");
+	//Jaden
+	private void menuCustomer() {
+		C206_CaseStudy.setHeader("Customer Menu");
+		System.out.println("1. View All Quotation Requests");
+		System.out.println("2. Add New Quotation Requests");
+		System.out.println("3. Delete Quotations by Requestor Name");
+		System.out.println("4. Quit");
+	}
+	
+	//Jaden
+	public static String retrieveAllQuotationRequests(ArrayList<QuotationRequests> requestQuotationslist, String requestorName) {
+		boolean found = false;
+		String output = "";
+		String output1 = "";
 		
-		if(!propertyType.isEmpty() && areaSize >= 0 & !requestorName.isEmpty() && contactNumber >= 0 && !email.isEmpty() && budget > 0 
-				&& !completionDate.isEmpty()  && !renovationType.isEmpty() && numberOfRooms >= 0 && numberOfToilets >= 0 
-				&& !renovationStyle.isEmpty() && !urgentRequest.isEmpty()) {
-			requestQuotationList.add(new QuotationRequests(propertyType, areaSize, requestorName, contactNumber, email, budget, 
-					completionDate, renovationType, numberOfRooms, numberOfToilets, renovationStyle, urgentRequest));
+		if(requestQuotationslist.size() == 0) {
+			found = false;
+		}
+		else {
+			for(QuotationRequests qr : requestQuotationList) {
+				if (qr.getRequestorName().equalsIgnoreCase(requestorName)) {
+					output1 += String.format("%-84s\n", qr.toString());
+					found = true;
+				}
+			}
+		}
+		if(found == true) {
+			output += String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s %20s %-10s %-21s\n", "Property Type", "Area Size", "Requestor Name", "Contact Number", "Email", "Budget", "Completion Date", "Renovation Type", "Number of Rooms", "Number of Toilets", "Renovation Style?", "Urgent Request?");
+			output += output1;
+		}
+		else {
+			output = ("Requestor Name not found.");
+		}
+		
+		return output;
+	}
+	
+	//Jaden
+	public static void viewAllQuotationRequests(ArrayList<QuotationRequests> requestQuotationsList) {
+		String output = "";
+		output += retrieveAllQuotationRequests(requestQuotationsList, output);
+		System.out.println(output);
+	}
+	
+	//Jaden
+	public QuotationRequests inputRequests() {
+		QuotationRequests request = new QuotationRequests("", 0, "", 0, "", 0, "", "", 0, 0, "", "");
+		String propertyType = Helper.readString("\nEnter property type: ");
+		double areaSize = Helper.readDouble("Enter area size: ");
+		String requestorName = Helper.readString("Enter requestor name: ");
+		int contactNumber = Helper.readInt("Enter contact number: ");
+		String email = Helper.readString("Enter email: ");
+		double budget = Helper.readDouble("Enter Budget: ");
+		String completionDate  = Helper.readString("Enter completion date: ");
+		String renovationType = Helper.readString("Enter renovation type: ");
+		int numberOfRooms = Helper.readInt("Enter number of rooms: ");
+		int numberOfToilets = Helper.readInt("Enter Number of toilets: ");
+		String renovationStyle = Helper.readString("Enter your renovation style if any: ");
+		String urgentRequest = Helper.readString("Is it an urgent Request?: ");
+
+		if(propertyType.isEmpty() && areaSize > 0 & !requestorName.isEmpty() && contactNumber >= 0 && !email.isEmpty() && budget > 0 && !completionDate.isEmpty()
+				&& !renovationType.isEmpty() && numberOfRooms > 0 && numberOfToilets > 0 && !renovationStyle.isEmpty() && !urgentRequest.isEmpty()) {
+			request = new QuotationRequests(propertyType, areaSize, requestorName, contactNumber,
+					email, budget, completionDate, renovationType, numberOfRooms,
+					numberOfToilets, renovationStyle, urgentRequest);
+		}
+		return request;
+	}
+	
+	//Jaden
+	public static void addRequests(ArrayList<QuotationRequests> requestQuotationList, QuotationRequests request) {
+		boolean canAdd = false;
+		if(requestQuotationList.size() == 0) {
+			canAdd = true;
+		}
+		else if (requestQuotationList.size() > 0){
+			for (int qr = 0; qr < requestQuotationList.size(); qr++) {
+				if (!requestQuotationList.get(qr).getRequestorName().equalsIgnoreCase(request.getRequestorName())) {
+					canAdd = true;
+				}
+				else {
+					canAdd = false;
+					break;
+				}
+			}
+		}	
+		if(canAdd == true) {
+			requestQuotationList.add(request);
 			System.out.println("Quotation Request added successfully.");
 		}
 		else {
-			System.out.println("Quotation Request failed.");
+			System.out.println("Quotation Request failed to add.");
 		}
-		
 	}
 	
-	public void viewAllRequests() {
-		String output = String.format("\n%-13s %-15s %-22s %-18s %-24s %-11s %-13s %-15s\n", "Property Type", "Area Size", "Requestor Name", 
-				"Contact Number", "Email", "Budget", "Completion Date", "Renovation Type", "Number of Rooms", "Number of Toilets", 
-				"Renovation Style (optional)", "Urgent Request?");
-		for (QuotationRequests qr : requestQuotationList) {
-			output += String.format("%-84s\n", qr.toString());
+	//Jaden
+	public static void deleteRequest(ArrayList<QuotationRequests> requestQuotationList, String requestorName) {
+		boolean isDeleted = false;
+		if(requestQuotationList.size() == 0) {
+			isDeleted = true;
 		}
-		System.out.println(output);
-	}
-		
-	public void deleteQuotationRequest() {
-			boolean deleted = false;
-			String requestorName = Helper.readString("\nEnter Requestor Name > ");
-			for (int qr = 0; qr < quotationList.size(); qr++) {
-				if (requestQuotationList.get(qr).getRequestorName().equals(requestorName)) {
+		else {
+			for (int qr = 0; qr < requestQuotationList.size(); qr++) {
+				if (requestQuotationList.get(qr).getRequestorName().equalsIgnoreCase(requestorName)) {
 					requestQuotationList.remove(qr);
-					deleted = true;
+					isDeleted = true;
 				}
 			}
-			if(deleted == true) {
-				System.out.println("Request removed successfully.");
-			}
-			else {
-				System.out.println("Could not remove Request.");
-			}
 		}
+		if(isDeleted == true) {
+			System.out.println("Quotation Request deleted successfully.");
+		}
+		else {
+			System.out.println("Quotation Request failed to delete.");
+		}
+	}
 	
 	//phoebe
 	public void designersPage() {
@@ -312,7 +373,7 @@ public class C206_CaseStudy {
 	}
 	
 	//phoebe
-	private void menuDesigner() {
+	private static void menuDesigner() {
 		C206_CaseStudy.setHeader("Designer Interface");
 		System.out.println("1. View All Quotations");
 		System.out.println("2. Add New Quotations");
